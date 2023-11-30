@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Arquitectura de Red de Transacciones</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            font-family: 'Arial', sans-serif;
+        }
+
+        .architecture-container {
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+        }
+
+        .server {
+            text-align: center;
+            margin: 10px;
+        }
+
+        .server i {
+            font-size: 2em;
+        }
+
+        .switch {
+            position: relative;
+            margin: 0 30px;
+        }
+
+        .switch i {
+            font-size: 3em;
+        }
+
+        svg {
+            position: absolute;
+        }
+    </style>
+</head>
+<body>
+    <h1>Arquitectura de Red de Transacciones</h1>
+
+    <div class="architecture-container">
+        <!-- Fila 1 -->
+        <div class="server" id="sirion-chile">
+            <i class="fas fa-server"></i>
+            <p>Sirion Chile</p>
+        </div>
+
+        <div class="switch" id="switch">
+            <i class="fas fa-random"></i>
+            <svg width="100%" height="100%">
+                <!-- Conexión de Sirion Chile al Switch -->
+                <line x1="0" y1="50%" x2="100%" y2="50%" stroke="black" stroke-width="2" />
+            </svg>
+        </div>
+
+        <!-- Fila 2 -->
+        <div class="server" id="oregon-test">
+            <i class="fas fa-server"></i>
+            <p>Oregon Test</p>
+        </div>
+
+        <div class="server" id="oregon-prod">
+            <i class="fas fa-server"></i>
+            <p>Oregon Prod</p>
+        </div>
+
+        <!-- Fila 3 -->
+        <div class="server" id="virginia-test">
+            <i class="fas fa-server"></i>
+            <p>Virginia Test</p>
+        </div>
+
+        <div class="server" id="virginia-prod">
+            <i class="fas fa-server"></i>
+            <p>Virginia Prod</p>
+        </div>
+    </div>
+</body>
+</html>

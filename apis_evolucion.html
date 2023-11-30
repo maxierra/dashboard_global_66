@@ -1,0 +1,186 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Reportes y Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            color: #333;
+        }
+
+        h1 {
+            color: #3498db;
+        }
+
+        .icon-financiero {
+            color: #3498db;
+            font-size: 2em;
+            margin-right: 8px;
+        }
+
+        #chartContainer {
+            width: 100%;
+            margin: 20px auto;
+        }
+    </style>
+</head>
+
+<body>
+    <!-- Barra de navegación -->
+    <div id="navbarContainer"></div>
+
+    <!-- Contenido principal -->
+    <div class="container">
+        <h4>Reportes Evolucion Apis</h4>
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>Api</th>
+                    <th>may-23</th>
+                    <th>jun-23</th>
+                    <th>jul-23</th>
+                    <th>ago-23</th>
+                    <th>sep-23</th>
+                    <th>oct-23</th>
+                </tr>
+            </thead>
+            <tbody id="tableBody">
+                <!-- Datos de la tabla se agregarán aquí dinámicamente -->
+            </tbody>
+        </table>
+
+        <div id="chartContainer">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+
+    <!-- Scripts -->
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cargar la barra de navegación
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbarContainer').innerHTML = data;
+                    M.AutoInit();  // Inicializar componentes de MaterializeCSS
+                })
+                .catch(error => console.error('Error al cargar la barra de navegación:', error));
+
+            // Datos para el gráfico
+            const chartData = {
+                labels: ['may-23', 'jun-23', 'jul-23', 'ago-23', 'sep-23', 'oct-23'],
+                datasets: []
+            };
+
+            // Datos para la tabla
+            const tableData = [
+                {
+                    api: 'TokenAccessLevel2Request',
+                    values: [87.5, 84.21, 88.16, 84.23, 84.61, 83.40],
+                },
+                {
+                    api: 'TarjetaRequest',
+                    values: [743.81, 651.23, 739.17, 783.46, 876.95, 1010.27],
+                },
+                {
+                    api: 'PREPAGAALTATRANSACCIONV2Request',
+                    values: [1345.9, 1377.57, 1477.21, 1452.48, 1465.74, 1668.61],
+                },
+                {
+                    api: 'TarjetaHabilitarRequest',
+                    values: [681.82, 619.22, 691.17, 729.59, 810.55, 936.45],
+                },
+                {
+                    api: 'TarjetaCambiaPinRequest',
+                    values: [629.19, 605.21, 678.59, 735.37, 944.56, 1043.40],
+                },
+                {
+                    api: 'TarjetaBloquearRequest',
+                    values: [834.12, 779.55, 852.43, 965.10, 1054.76, 1091.04],
+                },
+                {
+                    api: 'TarjetaDesbloquearRequest',
+                    values: [849.55, 724.19, 888.90, 890.92, 994.82, 1101.03],
+                },
+                {
+                    api: 'TarjetaCambiaEstadoRequest',
+                    values: [758.49, 701.92, 972.44, 1026.10, 991.36, 1067.77],
+                },
+             
+                {
+                    api: 'Valor esperado',
+                    values: [1000, 1000, 1000, 1000, 1000, 1000],
+                },
+            ];
+
+            // Crear el gráfico
+            const ctx = document.getElementById('myChart').getContext('2d');
+            const myChart = new Chart(ctx, {
+                type: 'line',
+                data: chartData,
+                options: {
+                    responsive: true,
+                    plugins: {
+                        legend: {
+                            position: 'top',
+                        },
+                        title: {
+                            display: true,
+                            text: 'Rendimiento de APIs',
+                            fontSize: 18,
+                        },
+                    },
+                    scales: {
+                        x: {
+                            title: {
+                                display: true,
+                                text: 'Mes',
+                            },
+                        },
+                        y: {
+                            title: {
+                                display: true,
+                                text: 'Valor',
+                            },
+                        },
+                    },
+                },
+            });
+
+            // Crear filas de la tabla y conjuntos de datos para el gráfico
+            const tableBody = document.getElementById('tableBody');
+
+            tableData.forEach(apiData => {
+                // Agregar fila a la tabla
+                const row = document.createElement('tr');
+                row.innerHTML = `<td>${apiData.api}</td>`;
+                apiData.values.forEach(value => {
+                    row.innerHTML += `<td>${value}</td>`;
+                });
+                tableBody.appendChild(row);
+
+                // Agregar conjunto de datos al gráfico
+                chartData.datasets.push({
+                    label: apiData.api,
+                    borderColor: apiData.api === 'Valor esperado' ? 'rgba(0, 255, 0, 1)' : `rgba(${Math.random() * 255},${Math.random() * 255},${Math.random() * 255},1)`,
+                    borderWidth: 1,
+                    data: apiData.values,
+                    fill: false,
+                });
+            });
+
+            // Actualizar el gráfico después de agregar datos
+            myChart.update();
+        });
+    </script>
+</body>
+
+</html>

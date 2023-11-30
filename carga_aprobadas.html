@@ -1,0 +1,175 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Formulario y Tabla de Datos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+
+<body>
+    <div class="container">
+        <h3>Formulario de Carga aprobadas</h3>
+        <form id="formularioCarga" class="col s12">
+            <div class="row">
+                <div class="input-field col s12">
+                    <select id="pais" required>
+                        <option value="" disabled selected>Seleccione un país</option>
+                        <option value="chile">Chile</option>
+                        <option value="peru">Perú</option>
+                    </select>
+                    <label for="pais">País</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s6">
+                    <select id="ano" required>
+                        <option value="" disabled selected>Seleccione el año</option>
+                        <option value="2023">2023</option>
+                        <option value="2024">2024</option>
+                    </select>
+                    <label for="ano">Año</label>
+                </div>
+                <div class="input-field col s6">
+                    <select id="mes" required>
+                        <option value="" disabled selected>Seleccione el mes</option>
+                        <option value="enero">Enero</option>
+                        <option value="febrero">Febrero</option>
+                        <option value="marzo">Marzo</option>
+                        <option value="abril">Abril</option>
+                        <option value="mayo">Mayo</option>
+                        <option value="junio">Junio</option>
+                        <option value="julio">Julio</option>
+                        <option value="agosto">Agosto</option>
+                        <option value="septiembre">Septiembre</option>
+                        <option value="octubre">Octubre</option>
+                        <option value="noviembre">Noviembre</option>
+                        <option value="diciembre">Diciembre</option>
+                    </select>
+                    <label for="mes">Mes</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="aprobadas" type="number" class="validate" required>
+                    <label for="aprobadas">Aprobadas</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="rechazadas" type="number" class="validate" required>
+                    <label for="rechazadas">Rechazadas</label>
+                </div>
+            </div>
+            <div class="row">
+                <div class="input-field col s12">
+                    <input id="anuladas" type="number" class="validate" required>
+                    <label for="anuladas">Anuladas</label>
+                </div>
+            </div>
+            <button class="btn waves-effect waves-light" type="submit" name="action">Agregar
+                <i class="material-icons right">send</i>
+            </button>
+        </form>
+
+        <h3>Tabla de Datos</h3>
+        <table class="striped">
+            <thead>
+                <tr>
+                    <th>País</th>
+                    <th>Año</th>
+                    <th>Mes</th>
+                    <th>Aprobadas</th>
+                    <th>Rechazadas</th>
+                    <th>Anuladas</th>
+                </tr>
+            </thead>
+            <tbody id="tablaDatosBody"></tbody>
+        </table>
+
+        <button class="btn waves-effect waves-light" id="exportarJson">Exportar JSON</button>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function () {
+            var form = document.getElementById('formularioCarga');
+            var tablaBody = document.getElementById('tablaDatosBody');
+            var exportarJsonBtn = document.getElementById('exportarJson');
+
+            // Recuperar datos de la tabla desde localStorage
+            var datosGuardados = JSON.parse(localStorage.getItem('datosTabla')) || [];
+            datosGuardados.forEach(function (datosFila) {
+                var fila = document.createElement('tr');
+                fila.innerHTML = `<td>${datosFila.pais}</td><td>${datosFila.ano}</td><td>${datosFila.mes}</td><td>${datosFila.aprobadas}</td><td>${datosFila.rechazadas}</td><td>${datosFila.anuladas}</td>`;
+                tablaBody.appendChild(fila);
+            });
+
+            form.addEventListener('submit', function (event) {
+                event.preventDefault();
+
+                // Obtener valores del formulario
+                var pais = document.getElementById('pais').value;
+                var ano = document.getElementById('ano').value;
+                var mes = document.getElementById('mes').value;
+                var aprobadas = document.getElementById('aprobadas').value;
+                var rechazadas = document.getElementById('rechazadas').value;
+                var anuladas = document.getElementById('anuladas').value;
+
+                // Crear fila y agregarla a la tabla
+                var fila = document.createElement('tr');
+                fila.innerHTML = `<td>${pais}</td><td>${ano}</td><td>${mes}</td><td>${aprobadas}</td><td>${rechazadas}</td><td>${anuladas}</td>`;
+                tablaBody.appendChild(fila);
+
+                // Limpiar formulario
+                form.reset();
+
+                // Guardar datos de la tabla en localStorage
+                var datosTabla = Array.from(tablaBody.children).map(function (fila) {
+                    var celdas = fila.getElementsByTagName('td');
+                    return {
+                        pais: celdas[0].innerText,
+                        ano: celdas[1].innerText,
+                        mes: celdas[2].innerText,
+                        aprobadas: celdas[3].innerText,
+                        rechazadas: celdas[4].innerText,
+                        anuladas: celdas[5].innerText
+                    };
+                });
+                localStorage.setItem('datosTabla', JSON.stringify(datosTabla));
+            });
+
+            exportarJsonBtn.addEventListener('click', function () {
+                // Obtener datos de la tabla
+                var datosTabla = Array.from(tablaBody.children).map(function (fila) {
+                    var celdas = fila.getElementsByTagName('td');
+                    return {
+                        pais: celdas[0].innerText,
+                        ano: celdas[1].innerText,
+                        mes: celdas[2].innerText,
+                        aprobadas: celdas[3].innerText,
+                        rechazadas: celdas[4].innerText,
+                        anuladas: celdas[5].innerText
+                    };
+                });
+
+                // Convertir a JSON y descargar archivo
+                var contenidoJson = JSON.stringify(datosTabla, null, 2);
+                var blob = new Blob([contenidoJson], { type: 'application/json' });
+                var link = document.createElement('a');
+                link.href = window.URL.createObjectURL(blob);
+                link.download = 'transacciones.json';
+                link.click();
+            });
+
+            // Inicializar select de Materialize
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+        });
+    </script>
+</body>
+
+</html>

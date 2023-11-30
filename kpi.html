@@ -1,0 +1,219 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Performance Indicators</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+
+    <style>
+        .value {
+            font-size: 2em;
+            font-weight: bold;
+            color: black;
+            margin-top: 5px;
+        }
+
+        .title {
+            font-size: 1.5em;
+            font-weight: bold;
+            color: #333;
+            margin-bottom: 10px;
+        }
+
+        nav {
+            background-color: #fff;
+            color: #000;
+            width: 100%;
+        }
+
+        nav ul a {
+            color: #000;
+        }
+
+        nav ul a i {
+            color: #3498db;
+        }
+
+        #filters {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            align-items: center;
+            margin-top: 20px;
+            text-align: center;
+        }
+
+        #filters label,
+        #filters select,
+        #filters button {
+            margin: 5px;
+        }
+
+        #result-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 20px;
+        }
+
+        .card {
+            border: 1px solid #ccc;
+            border-radius: 18px;
+            padding: 10px;
+            margin: 10px;
+            width: 450px;
+            box-shadow: 0 4px 8px rgba(0, 0, 0, 0.1);
+            background-color: #fff;
+            text-align: center;
+            margin-bottom: 20px;
+            transition: box-shadow 0.3s ease;
+        }
+
+        .card:hover {
+            box-shadow: 0 8px 16px rgba(0, 0, 0, 0.2);
+        }
+
+        .card i {
+            font-size: 2em;
+        }
+
+        @media (max-width: 768px) {
+            .card {
+                width: 100%;
+            }
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbarContainer"></div>
+
+    <div id="filters">
+        <label for="yearSelect">Año:</label>
+        <select id="yearSelect">
+            <option value="2023">2023</option>
+        </select>
+
+        <label for="monthSelect">Mes:</label>
+        <select id="monthSelect">
+            <option value="junio">Junio</option>
+            <option value="julio">Julio</option>
+            <option value="agosto">Agosto</option>
+            <option value="septiembre">Septiembre</option>
+            <option value="octubre" selected>Octubre</option>
+        </select>
+
+        <button onclick="filterData()">Filtrar</button>
+    </div>
+
+    <div id="result-container"></div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbarContainer').innerHTML = data;
+                    M.AutoInit();
+                });
+
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    const jsonData = data;
+                    filterData(jsonData);
+                })
+                .catch(error => console.error('Error al cargar el archivo JSON:', error));
+        });
+
+        const displayData = (data) => {
+            const resultContainer = document.getElementById('result-container');
+            resultContainer.innerHTML = '';
+
+            const customOrder = [
+                "autorizaciones",
+                "disponibilidad apis",
+                "tiempos de respuesta apis",
+                "procesadas chile",
+                "procesadas peru",
+                "disponibilidad mastercard",
+                "disponibilidad mambu",
+                "disponibilidad global 66"
+            ];
+
+            const sortedData = customOrder.map(title => data.find(item => item.titulo === title)).filter(item => item);
+
+            sortedData.forEach((item, index) => {
+                const card = document.createElement('div');
+                card.className = 'card';
+                const differenceColor = item.diferencia >= 0 ? 'green' : 'red';
+                const randomColor = getRandomColor();
+                const valueText = item.titulo === 'tiempos de respuesta apis' ? item["valor alcanzado"].toFixed(2) : `${item["valor alcanzado"].toFixed(2)}%`;
+                
+                card.innerHTML = `
+                    <i class="fas ${getIconClass(item.titulo)}" style="font-size: 2em; color: ${randomColor};"></i>
+                    <div class="title">${item.titulo}</div>
+                    <div class="value">${valueText}</div>
+                    <div class="small">Valor Esperado: ${item["valor esperado"]}</div>
+                    <div class="small" style="color: ${differenceColor};">Diferencia: ${item.diferencia.toFixed(2)}</div>
+                `;
+                resultContainer.appendChild(card);
+
+                if ((index + 1) % 2 === 0) {
+                    resultContainer.innerHTML += '<br>';
+                }
+            });
+        };
+
+        const getRandomColor = () => {
+            const letters = '0123456789ABCDEF';
+            let color = '#';
+            for (let i = 0; i < 6; i++) {
+                color += letters[Math.floor(Math.random() * 16)];
+            }
+            return color;
+        };
+
+        const getIconClass = (title) => {
+            const titleIcons = {
+                "autorizaciones": "fa-certificate",
+                "disponibilidad apis": "fa-check",
+                "tiempos de respuesta apis": "fas fa-hourglass",
+                "procesadas chile": "fa-flag",
+                "procesadas peru": "fa-flag",
+                "disponibilidad mastercard": "fa-credit-card",
+                "disponibilidad mambu": "fa-database",
+                "disponibilidad global 66": "fa-globe",
+            };
+            return titleIcons[title] || 'fa-question';
+        };
+
+        window.filterData = () => {
+            const yearSelect = document.getElementById('yearSelect');
+            const monthSelect = document.getElementById('monthSelect');
+            const selectedYear = parseInt(yearSelect.value);
+            const selectedMonth = monthSelect.value.toLowerCase();
+
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    const filteredData = data.filter(item => {
+                        const itemYear = item.año === selectedYear;
+                        const itemMonth = item.mes.toLowerCase() === selectedMonth;
+                        return itemYear && itemMonth;
+                    });
+
+                    displayData(filteredData);
+                })
+                .catch(error => console.error('Error al cargar el archivo JSON:', error));
+        };
+    </script>
+</body>
+
+</html>

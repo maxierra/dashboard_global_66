@@ -1,0 +1,59 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Panel de Reportes y Dashboard</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+    <style>
+        body {
+            color: #333;
+        }
+
+        h1 {
+            color: #3498db;
+        }
+
+        .icon-financiero {
+            color: #3498db;
+            font-size: 2em;
+            margin-right: 8px;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbarContainer"></div>
+
+    <div class="container">
+        <i class="fas fa-chart-line icon-financiero"></i>
+        <h1>Bienvenido al Panel de Reportes y Dashboard de Entregas Mensuales</h1>
+        <p>Panel de reportes y dashboard de entregas mensuales hacia nuestro cliente global, Global 66. Aquí encontrarás una visión detallada de nuestros procesos y resultados, respaldados por análisis de datos precisos y en tiempo real.</p>
+
+        <p>Nuestra dedicación a la excelencia y la transparencia nos impulsa a proporcionarte información actualizada sobre nuestras operaciones financieras. Este panel de reportes te permitirá acceder a métricas clave, gráficos informativos y análisis profundos que respaldan la toma de decisiones estratégicas.</p>
+
+        <p>Mantente al tanto de nuestros logros, sigue de cerca los indicadores clave de rendimiento y descubre cómo nuestro equipo trabaja incansablemente para optimizar y garantizar el éxito de Global 66. Estamos comprometidos con la entrega oportuna y efectiva de nuestros servicios, y esta plataforma es tu puerta de entrada a un mundo de información valiosa para tus operaciones financieras globales.</p>
+
+        <p>Te invitamos a explorar y aprovechar al máximo esta potente herramienta. Siempre estamos a tu disposición para responder a tus preguntas y proporcionarte el soporte que necesitas. ¡Gracias por confiar en nosotros y por ser parte de la visión global de éxito financiero!</p>
+    </div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbarContainer').innerHTML = data;
+                    document.getElementById('navbarContainer').classList.add('navbar-fixed');
+                    M.AutoInit();
+                })
+                .catch(error => console.error('Error al cargar la barra de navegación:', error));
+        });
+    </script>
+</body>
+
+</html>

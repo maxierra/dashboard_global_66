@@ -1,0 +1,158 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla y Gráficos</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/d3/7.1.1/d3.min.js"></script>
+</head>
+<body>
+    <div>
+        <label for="year">Año:</label>
+        <select id="year" onchange="displayFilteredTableAndGraphs()">
+            <!-- Options will be added dynamically -->
+        </select>
+
+        <label for="month">Mes:</label>
+        <select id="month" onchange="displayFilteredTableAndGraphs()">
+            <!-- Options will be added dynamically -->
+        </select>
+    </div>
+
+    <div id="output">
+        <h2>Tabla filtrada por año y mes</h2>
+        <p id="table-info"></p>
+        <table border="1" id="filtered-table"></table>
+
+        <h2>Gráficos de Valor Alcanzado</h2>
+        <div id="graficos-container">
+            <!-- Los gráficos se agregarán aquí dinámicamente -->
+        </div>
+    </div>
+
+    <script>
+        let jsonData;
+
+        // Función para cargar y mostrar datos al cargar la página
+        window.onload = function () {
+            loadJson();
+        };
+
+        function loadJson() {
+            fetch('data.json') // Nombre del archivo JSON
+                .then(response => response.json())
+                .then(data => {
+                    jsonData = data;
+                    displayYearsAndMonths();
+                })
+                .catch(error => console.error('Error fetching JSON:', error));
+        }
+
+        function displayYearsAndMonths() {
+            const yearSelect = document.getElementById('year');
+            const monthSelect = document.getElementById('month');
+
+            const years = [...new Set(jsonData.map(entry => entry.año))];
+            const months = [...new Set(jsonData.map(entry => entry.mes.toLowerCase()))];
+
+            // Limpiar opciones existentes
+            yearSelect.innerHTML = '';
+            monthSelect.innerHTML = '';
+
+            // Agregar opciones al desplegable de años
+            years.forEach(year => {
+                const option = document.createElement('option');
+                option.value = year;
+                option.textContent = year;
+                yearSelect.appendChild(option);
+            });
+
+            // Agregar opciones al desplegable de meses
+            months.forEach(month => {
+                const option = document.createElement('option');
+                option.value = month;
+                option.textContent = month.charAt(0).toUpperCase() + month.slice(1); // Capitalizar primer letra
+                monthSelect.appendChild(option);
+            });
+
+            // No mostrar la tabla y gráficos hasta que se seleccione el año y el mes
+        }
+
+        function displayFilteredTableAndGraphs() {
+            const filteredTable = document.getElementById('filtered-table');
+            const tableInfoElement = document.getElementById('table-info');
+            const graficosContainer = document.getElementById('graficos-container');
+            const yearSelect = document.getElementById('year');
+            const monthSelect = document.getElementById('month');
+            const selectedYear = parseInt(yearSelect.value);
+            const selectedMonth = monthSelect.value.toLowerCase();
+
+            // Filtrar datos por año y mes seleccionados
+            const filteredData = jsonData.filter(entry => entry.año === selectedYear && entry.mes.toLowerCase() === selectedMonth);
+
+            // Limpiar contenido anterior
+            filteredTable.innerHTML = '';
+            tableInfoElement.innerHTML = '';
+            graficosContainer.innerHTML = '';
+
+            // Mostrar la tabla solo si hay datos filtrados
+            if (filteredData.length > 0) {
+                // Agregar encabezados a la tabla
+                const headerRow = filteredTable.insertRow();
+                const headerColumns = Object.keys(filteredData[0]);
+                headerColumns.forEach(columnName => {
+                    const cell = headerRow.insertCell();
+                    cell.innerHTML = columnName;
+                });
+
+                // Iterar sobre los datos filtrados y mostrar en la tabla
+                for (const entry of filteredData) {
+                    const row = filteredTable.insertRow();
+                    headerColumns.forEach(columnName => {
+                        const cell = row.insertCell();
+                        cell.innerHTML = entry[columnName];
+                    });
+                }
+
+                tableInfoElement.innerHTML = `Se muestran los datos filtrados para el año ${selectedYear} y el mes ${selectedMonth}.`;
+
+                // Llamar a la función para mostrar gráficos
+                displayGraphs(filteredData);
+            } else {
+                tableInfoElement.innerHTML = `No hay datos para el año ${selectedYear} y el mes ${selectedMonth}.`;
+            }
+        }
+
+        function displayGraphs(data) {
+            const graficosContainer = document.getElementById('graficos-container');
+
+            // Obtener las claves de la fila de encabezado
+            const headerColumns = Object.keys(data[0]);
+
+            headerColumns.forEach(columnName => {
+                if (columnName.toLowerCase().includes('valor alcanzado')) {
+                    const graficoDiv = document.createElement('div');
+                    graficoDiv.className = 'grafico-container';
+
+                    const velocimetroDiv = document.createElement('div');
+                    velocimetroDiv.className = 'velocimetro';
+                    velocimetroDiv.id = `velocimetro-${columnName.replace(/\s+/g, '-').toLowerCase()}`;
+
+                    graficoDiv.appendChild(velocimetroDiv);
+                    graficosContainer.appendChild(graficoDiv);
+
+                    // Obtener el valor alcanzado para la columna
+                    const valorAlcanzado = data[0][columnName];
+
+                    // Crear velocímetro
+                    crearVelocimetro(`velocimetro-${columnName.replace(/\s+/g, '-').toLowerCase()}`, valorAlcanzado);
+                }
+            });
+        }
+
+        function crearVelocimetro(id, valor) {
+            // Resto del código del velocímetro ...
+        }
+    </script>
+</body>
+</html>

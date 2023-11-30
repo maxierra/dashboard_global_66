@@ -1,0 +1,82 @@
+[
+  {
+    "pais": "chile",
+    "ano": "2023",
+    "mes": "junio",
+    "aprobadas": "13847",
+    "rechazadas": "3744",
+    "anuladas": "840"
+  },
+  {
+    "pais": "peru",
+    "ano": "2023",
+    "mes": "junio",
+    "aprobadas": "2877",
+    "rechazadas": "2031",
+    "anuladas": "182"
+  },
+  {
+    "pais": "chile",
+    "ano": "2023",
+    "mes": "julio",
+    "aprobadas": "14864",
+    "rechazadas": "4431",
+    "anuladas": "755"
+  },
+  {
+    "pais": "peru",
+    "ano": "2023",
+    "mes": "julio",
+    "aprobadas": "3738",
+    "rechazadas": "3161",
+    "anuladas": "225"
+  },
+  {
+    "pais": "chile",
+    "ano": "2023",
+    "mes": "agosto",
+    "aprobadas": "16006",
+    "rechazadas": "6119",
+    "anuladas": "923"
+  },
+  {
+    "pais": "peru",
+    "ano": "2023",
+    "mes": "agosto",
+    "aprobadas": "3818",
+    "rechazadas": "4027",
+    "anuladas": "403"
+  },
+  {
+    "pais": "chile",
+    "ano": "2023",
+    "mes": "septiembre",
+    "aprobadas": "24679",
+    "rechazadas": "6056",
+    "anuladas": "1159"
+  },
+  {
+    "pais": "peru",
+    "ano": "2023",
+    "mes": "septiembre",
+    "aprobadas": "4025",
+    "rechazadas": "4194",
+    "anuladas": "388"
+  },
+  {
+    "pais": "chile",
+    "ano": "2023",
+    "mes": "octubre",
+    "aprobadas": "23384",
+    "rechazadas": "6980",
+    "anuladas": "1423"
+  },
+  {
+    "pais": "peru",
+    "ano": "2023",
+    "mes": "octubre",
+    "aprobadas": "4913",
+    "rechazadas": "5156",
+    "anuladas": "526"
+  }
+]

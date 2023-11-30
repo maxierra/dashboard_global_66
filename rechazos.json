@@ -1,0 +1,858 @@
+[
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "Chile",
+    "Número de Rechazo": "9067",
+    "Descripción": "RECHAZO MABU(Wh",
+    "Cantidad": "3353"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "Chile",
+    "Número de Rechazo": "568",
+    "Descripción": "RECHAZO MODULO",
+    "Cantidad": "247"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "Chile",
+    "Número de Rechazo": "632",
+    "Descripción": "PIN INVALIDO",
+    "Cantidad": "193"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "Chile",
+    "Número de Rechazo": "588",
+    "Descripción": "EL MONTO DEL MO",
+    "Cantidad": "162"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "Chile",
+    "Número de Rechazo": "304",
+    "Descripción": "TARJETA DADA DE",
+    "Cantidad": "118"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "Chile",
+    "Número de Rechazo": "329",
+    "Descripción": "TARJETA EN ESTA",
+    "Cantidad": "110"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "Chile",
+    "Número de Rechazo": "9010",
+    "Descripción": "TRANSACCION INF",
+    "Cantidad": "80"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "Chile",
+    "Número de Rechazo": "601",
+    "Descripción": "CODIGO DE SEGUR",
+    "Cantidad": "62"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "Chile",
+    "Número de Rechazo": "9066",
+    "Descripción": "ERROR PROCESAND",
+    "Cantidad": "50"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "Chile",
+    "Número de Rechazo": "901",
+    "Descripción": "FECHA VENCIMIEN",
+    "Cantidad": "28"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "Chile",
+    "Número de Rechazo": "9068",
+    "Descripción": "REQUIERE PIN",
+    "Cantidad": "15"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "Chile",
+    "Número de Rechazo": "590",
+    "Descripción": "PLASTICO NO HAB",
+    "Cantidad": "8"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "Chile",
+    "Número de Rechazo": "635",
+    "Descripción": "EMV INVALIDO",
+    "Cantidad": "5"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "peru",
+    "Número de Rechazo": "9067",
+    "Descripción": "RECHAZO MABU",
+    "Cantidad": "2024"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "peru",
+    "Número de Rechazo": "9066",
+    "Descripción": "ERROR PROCESAND",
+    "Cantidad": "269"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "peru",
+    "Número de Rechazo": "544",
+    "Descripción": "EL MONTO DEL MO",
+    "Cantidad": "220"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "peru",
+    "Número de Rechazo": "304",
+    "Descripción": "TARJETA DADA DE",
+    "Cantidad": "157"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "peru",
+    "Número de Rechazo": "9010",
+    "Descripción": "TRANSACCION INF",
+    "Cantidad": "128"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "peru",
+    "Número de Rechazo": "568",
+    "Descripción": "RECHAZO MODULO",
+    "Cantidad": "112"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "peru",
+    "Número de Rechazo": "601",
+    "Descripción": "CODIGO DE SEGUR",
+    "Cantidad": "70"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "peru",
+    "Número de Rechazo": "588",
+    "Descripción": "EL MONTO DEL MO",
+    "Cantidad": "55"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "peru",
+    "Número de Rechazo": "632",
+    "Descripción": "PIN INVALIDO",
+    "Cantidad": "55"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "peru",
+    "Número de Rechazo": "901",
+    "Descripción": "FECHA VENCIMIEN",
+    "Cantidad": "27"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "peru",
+    "Número de Rechazo": "329",
+    "Descripción": "TARJETA EN ESTA",
+    "Cantidad": "25"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "peru",
+    "Número de Rechazo": "590",
+    "Descripción": "PLASTICO NO HAB",
+    "Cantidad": "18"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Julio",
+    "País": "peru",
+    "Número de Rechazo": "9068",
+    "Descripción": "REQUIERE PIN",
+    "Cantidad": "1"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "9067",
+    "Descripción": "RECHAZO MABU(Wh",
+    "Cantidad": "4648"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "9010",
+    "Descripción": "TRANSACCION INF",
+    "Cantidad": "299"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "9066",
+    "Descripción": "ERROR PROCESAND",
+    "Cantidad": "290"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "304",
+    "Descripción": "TARJETA DADA DE",
+    "Cantidad": "211"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "632",
+    "Descripción": "PIN INVALIDO",
+    "Cantidad": "205"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "568",
+    "Descripción": "RECHAZO MODULO",
+    "Cantidad": "137"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "329",
+    "Descripción": "TARJETA EN ESTA",
+    "Cantidad": "107"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "588",
+    "Descripción": "EL MONTO DEL MO",
+    "Cantidad": "72"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "901",
+    "Descripción": "FECHA VENCIMIEN",
+    "Cantidad": "55"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "601",
+    "Descripción": "CODIGO DE SEGUR",
+    "Cantidad": "48"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "590",
+    "Descripción": "PLASTICO NO HAB",
+    "Cantidad": "13"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "635",
+    "Descripción": "EMV INVALIDO",
+    "Cantidad": "11"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "9068",
+    "Descripción": "REQUIERE PIN",
+    "Cantidad": "11"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "chile",
+    "Número de Rechazo": "507",
+    "Descripción": "EL MONTO DEL AD",
+    "Cantidad": "7"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "peru",
+    "Número de Rechazo": "9067",
+    "Descripción": "RECHAZO MABU(Wh",
+    "Cantidad": "3073"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "peru",
+    "Número de Rechazo": "544",
+    "Descripción": "EL MONTO DEL MO",
+    "Cantidad": "235"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "peru",
+    "Número de Rechazo": "9066",
+    "Descripción": "ERROR PROCESAND",
+    "Cantidad": "176"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "peru",
+    "Número de Rechazo": "9010",
+    "Descripción": "TRANSACCION INF",
+    "Cantidad": "138"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "peru",
+    "Número de Rechazo": "568",
+    "Descripción": "RECHAZO MODULO",
+    "Cantidad": "124"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "peru",
+    "Número de Rechazo": "304",
+    "Descripción": "TARJETA DADA DE",
+    "Cantidad": "110"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "peru",
+    "Número de Rechazo": "601",
+    "Descripción": "CODIGO DE SEGUR",
+    "Cantidad": "72"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "peru",
+    "Número de Rechazo": "632",
+    "Descripción": "PIN INVALIDO",
+    "Cantidad": "34"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "peru",
+    "Número de Rechazo": "329",
+    "Descripción": "TARJETA EN ESTA",
+    "Cantidad": "25"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "peru",
+    "Número de Rechazo": "901",
+    "Descripción": "FECHA VENCIMIEN",
+    "Cantidad": "21"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "peru",
+    "Número de Rechazo": "590",
+    "Descripción": "PLASTICO NO HAB",
+    "Cantidad": "12"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "peru",
+    "Número de Rechazo": "588",
+    "Descripción": "EL MONTO DEL MO",
+    "Cantidad": "6"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Agosto",
+    "País": "peru",
+    "Número de Rechazo": "9068",
+    "Descripción": "REQUIERE PIN",
+    "Cantidad": "1"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "9067",
+    "Descripción": "RECHAZO MABU(Wh",
+    "Cantidad": "4496"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "304",
+    "Descripción": "TARJETA DADA DE",
+    "Cantidad": "458"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "568",
+    "Descripción": "RECHAZO MODULO",
+    "Cantidad": "318"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "632",
+    "Descripción": "PIN INVALIDO",
+    "Cantidad": "311"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "601",
+    "Descripción": "CODIGO DE SEGUR",
+    "Cantidad": "104"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "9066",
+    "Descripción": "ERROR PROCESAND",
+    "Cantidad": "91"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "9010",
+    "Descripción": "TRANSACCION INF",
+    "Cantidad": "68"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "329",
+    "Descripción": "TARJETA EN ESTA",
+    "Cantidad": "66"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "588",
+    "Descripción": "EL MONTO DEL MO",
+    "Cantidad": "46"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "901",
+    "Descripción": "FECHA VENCIMIEN",
+    "Cantidad": "45"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "590",
+    "Descripción": "PLASTICO NO HAB",
+    "Cantidad": "19"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "9068",
+    "Descripción": "REQUIERE PIN",
+    "Cantidad": "18"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "635",
+    "Descripción": "EMV INVALIDO",
+    "Cantidad": "10"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "Chile",
+    "Número de Rechazo": "507",
+    "Descripción": "EL MONTO DEL AD",
+    "Cantidad": "5"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "peru",
+    "Número de Rechazo": "9067",
+    "Descripción": "RECHAZO MABU(Wh",
+    "Cantidad": "3412"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "peru",
+    "Número de Rechazo": "544",
+    "Descripción": "EL MONTO DEL MO",
+    "Cantidad": "277"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "peru",
+    "Número de Rechazo": "304",
+    "Descripción": "TARJETA DADA DE",
+    "Cantidad": "121"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "peru",
+    "Número de Rechazo": "568",
+    "Descripción": "RECHAZO MODULO",
+    "Cantidad": "109"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "peru",
+    "Número de Rechazo": "601",
+    "Descripción": "CODIGO DE SEGUR",
+    "Cantidad": "66"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "peru",
+    "Número de Rechazo": "329",
+    "Descripción": "TARJETA EN ESTA",
+    "Cantidad": "54"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "peru",
+    "Número de Rechazo": "9010",
+    "Descripción": "TRANSACCION INF",
+    "Cantidad": "38"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "peru",
+    "Número de Rechazo": "9066",
+    "Descripción": "ERROR PROCESAND",
+    "Cantidad": "37"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "peru",
+    "Número de Rechazo": "632",
+    "Descripción": "PIN INVALIDO",
+    "Cantidad": "36"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "peru",
+    "Número de Rechazo": "588",
+    "Descripción": "EL MONTO DEL MO",
+    "Cantidad": "17"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "peru",
+    "Número de Rechazo": "901",
+    "Descripción": "FECHA VENCIMIEN",
+    "Cantidad": "15"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Septiembre",
+    "País": "peru",
+    "Número de Rechazo": "590",
+    "Descripción": "PLASTICO NO HAB",
+    "Cantidad": "12"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "9067",
+    "Descripción": "RECHAZO MABU(Wh",
+    "Cantidad": "5475"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "304",
+    "Descripción": "TARJETA DADA DE",
+    "Cantidad": "463"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "632",
+    "Descripción": "PIN INVALIDO",
+    "Cantidad": "352"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "568",
+    "Descripción": "RECHAZO MODULO",
+    "Cantidad": "270"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "601",
+    "Descripción": "CODIGO DE SEGUR",
+    "Cantidad": "106"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "901",
+    "Descripción": "FECHA VENCIMIEN",
+    "Cantidad": "79"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "329",
+    "Descripción": "TARJETA EN ESTA",
+    "Cantidad": "69"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "590",
+    "Descripción": "PLASTICO NO HAB",
+    "Cantidad": "48"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "9010",
+    "Descripción": "TRANSACCION INF",
+    "Cantidad": "31"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "9066",
+    "Descripción": "ERROR PROCESAND",
+    "Cantidad": "31"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "9068",
+    "Descripción": "REQUIERE PIN",
+    "Cantidad": "19"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "588",
+    "Descripción": "EL MONTO DEL MO",
+    "Cantidad": "18"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "544",
+    "Descripción": "EL MONTO DEL MO",
+    "Cantidad": "6"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "Chile",
+    "Número de Rechazo": "635",
+    "Descripción": "EMV INVALIDO",
+    "Cantidad": "5"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "9067",
+    "Descripción": "RECHAZO MABU(Wh",
+    "Cantidad": "3954"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "544",
+    "Descripción": "EL MONTO DEL MO",
+    "Cantidad": "371"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "304",
+    "Descripción": "TARJETA DADA DE",
+    "Cantidad": "327"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "568",
+    "Descripción": "RECHAZO MODULO",
+    "Cantidad": "196"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "329",
+    "Descripción": "TARJETA EN ESTA",
+    "Cantidad": "89"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "601",
+    "Descripción": "CODIGO DE SEGUR",
+    "Cantidad": "86"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "632",
+    "Descripción": "PIN INVALIDO",
+    "Cantidad": "31"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "901",
+    "Descripción": "FECHA VENCIMIEN",
+    "Cantidad": "28"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "590",
+    "Descripción": "PLASTICO NO HAB",
+    "Cantidad": "26"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "588",
+    "Descripción": "EL MONTO DEL MO",
+    "Cantidad": "14"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "9066",
+    "Descripción": "ERROR PROCESAND",
+    "Cantidad": "14"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "635",
+    "Descripción": "EMV INVALIDO",
+    "Cantidad": "12"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "9010",
+    "Descripción": "TRANSACCION INF",
+    "Cantidad": "7"
+  },
+  {
+    "Año": "2023",
+    "Mes": "Octubre",
+    "País": "peru",
+    "Número de Rechazo": "602",
+    "Descripción": "CODIGO DE SEGUR",
+    "Cantidad": "1"
+  }
+]

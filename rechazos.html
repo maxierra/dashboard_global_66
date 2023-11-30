@@ -1,0 +1,127 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Rechazos</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+</head>
+
+<body>
+    <div id="navbarContainer"></div>
+    <div class="container">
+        <h4 class="center-align">Rechazos</h4>
+        <div class="row">
+            <div class="input-field col s4">
+                <select id="filtroAno">
+                    <option value="" disabled selected>Seleccionar Año</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                </select>
+                <label>Año</label>
+            </div>
+            <div class="input-field col s4">
+                <select id="filtroMes">
+                    <option value="" disabled selected>Seleccionar Mes</option>
+                    <option value="Julio">Julio</option>
+                    <option value="Agosto">Agosto</option>
+                    <option value="Septiembre">Septiembre</option>
+                    <option value="Octubre">Octubre</option>
+                </select>
+                <label>Mes</label>
+            </div>
+            <div class="input-field col s4">
+                <select id="filtroPais">
+                    <option value="" disabled selected>Seleccionar País</option>
+                    <option value="Chile">Chile</option>
+                    <option value="Peru">Perú</option>
+                </select>
+                <label>País</label>
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn waves-effect waves-light" type="button" onclick="cargarTabla()">Cargar Tabla
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+        <div class="row">
+            <div class="col s12">
+                <h5 class="center-align" id="tablaTitulo"></h5>
+                <table class="striped responsive-table" id="tablaRechazos"></table>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cargar la barra de navegación desde el archivo navbar.html
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbarContainer').innerHTML = data;
+                    // Inicializar los elementos de Materialize después de cargar la barra de navegación
+                    M.AutoInit();
+                });
+        });
+
+        function cargarTabla() {
+            fetch('rechazos.json')
+                .then(response => response.json())
+                .then(data => {
+                    // Filtrar datos según los criterios seleccionados
+                    var filtroAno = document.getElementById('filtroAno').value;
+                    var filtroMes = document.getElementById('filtroMes').value;
+                    var filtroPais = document.getElementById('filtroPais').value;
+
+                    var datosFiltrados = data.filter(fila =>
+                        (filtroAno === '' || filtroAno === fila.Año) &&
+                        (filtroMes === '' || filtroMes === fila.Mes) &&
+                        (filtroPais === '' || filtroPais.toLowerCase() === fila.País.toLowerCase())
+                    );
+
+                    // Crear y mostrar la tabla
+                    crearTabla(datosFiltrados, 'tablaRechazos');
+
+                    // Mostrar el título de la tabla
+                    document.getElementById('tablaTitulo').textContent = `Rechazos - ${filtroPais}`;
+                })
+                .catch(error => console.error('Error al cargar el archivo JSON:', error));
+        }
+
+        function crearTabla(data, idTabla) {
+            var tabla = document.getElementById(idTabla);
+            tabla.innerHTML = ''; // Limpiar tabla
+
+            // Crear encabezado
+            var thead = document.createElement('thead');
+            var trHeader = document.createElement('tr');
+            var columnas = ['Año', 'Mes', 'Número de Rechazo', 'Descripción', 'Cantidad'];
+            columnas.forEach(col => {
+                var th = document.createElement('th');
+                th.textContent = col;
+                trHeader.appendChild(th);
+            });
+            thead.appendChild(trHeader);
+            tabla.appendChild(thead);
+
+            // Crear cuerpo de la tabla
+            var tbody = document.createElement('tbody');
+            data.forEach(fila => {
+                var tr = document.createElement('tr');
+                var valores = [fila.Año, fila.Mes, fila['Número de Rechazo'], fila.Descripción, fila.Cantidad];
+                valores.forEach(valor => {
+                    var td = document.createElement('td');
+                    td.textContent = valor;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            tabla.appendChild(tbody);
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>IndexedDB Demo</title>
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+  <script>
+    document.addEventListener('DOMContentLoaded', function () {
+      const dbName = 'datosDB';
+      const tableName = 'datosTabla';
+
+      const request = indexedDB.open(dbName, 1);
+
+      request.onupgradeneeded = function (event) {
+        const db = event.target.result;
+
+        if (!db.objectStoreNames.contains(tableName)) {
+          const objectStore = db.createObjectStore(tableName, { keyPath: 'id', autoIncrement: true });
+          // Define los índices que necesites.
+          objectStore.createIndex('anoMes', 'anoMes', { unique: false });
+          objectStore.createIndex('titulo', 'titulo', { unique: false });
+          objectStore.createIndex('valor1', 'valor1', { unique: false });
+          objectStore.createIndex('valor2', 'valor2', { unique: false });
+          objectStore.createIndex('valorAlcanzado', 'valorAlcanzado', { unique: false });
+          objectStore.createIndex('valorEsperado', 'valorEsperado', { unique: false });
+          objectStore.createIndex('diferencia', 'diferencia', { unique: false });
+          objectStore.createIndex('resultado', 'resultado', { unique: false });
+        }
+      };
+
+      request.onsuccess = function (event) {
+        const db = event.target.result;
+
+        // Manejar la carga de un archivo Excel
+        const input = document.createElement('input');
+        input.type = 'file';
+        input.accept = '.xlsx, .xls';
+
+        input.addEventListener('change', function () {
+          const file = this.files[0];
+          if (file) {
+            cargarExcel(db, tableName, file);
+          }
+        });
+
+        document.body.appendChild(input);
+      };
+
+      function cargarExcel(db, tableName, file) {
+        const reader = new FileReader();
+
+        reader.onload = function (e) {
+          const data = new Uint8Array(e.target.result);
+          const workbook = XLSX.read(data, { type: 'array' });
+
+          // Aquí asumes que tu hoja de trabajo está en la primera posición (puedes cambiarla si es necesario)
+          const sheet = workbook.Sheets[workbook.SheetNames[0]];
+
+          // Convertir la hoja de trabajo a formato JSON
+          const jsonData = XLSX.utils.sheet_to_json(sheet, { header: 1 });
+
+          // Procesar y almacenar los datos en IndexedDB
+          procesarYAlmacenarDatos(db, tableName, jsonData);
+        };
+
+        reader.readAsArrayBuffer(file);
+      }
+
+      function procesarYAlmacenarDatos(db, tableName, jsonData) {
+        const transaction = db.transaction([tableName], 'readwrite');
+        const objectStore = transaction.objectStore(tableName);
+
+        jsonData.forEach((fila, indice) => {
+          // Ignorar la fila de encabezados
+          if (indice !== 0) {
+            // Mapear los datos a tu estructura de objeto
+            const datos = {
+              anoMes: fila[0],
+              titulo: fila[1],
+              valor1: parseFloat(fila[2]),
+              valor2: parseFloat(fila[3]),
+              valorAlcanzado: parseFloat(fila[4]),
+              valorEsperado: parseFloat(fila[5]),
+              diferencia: parseFloat(fila[6]),
+              resultado: parseFloat(fila[7])
+            };
+
+            // Agregar el registro a IndexedDB
+            const request = objectStore.add(datos);
+
+            request.onsuccess = function () {
+              console.log('Registro agregado correctamente.');
+            };
+
+            request.onerror = function (error) {
+              console.error('Error al agregar el registro:', error);
+            };
+          }
+        });
+      }
+    });
+  </script>
+</head>
+<body>
+
+</body>
+</html>
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+

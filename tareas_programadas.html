@@ -1,0 +1,124 @@
+
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Performance Indicators</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-xxxxxx" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        /* Estilos... */
+    </style>
+</head>
+<body>
+    <div id="navbarContainer" class="navbar-fixed"></div>
+    
+    <h1>Reporte Tareas programadas</h1>
+
+    <div id="filters">
+        <!-- Resto del código... -->
+    </div>
+
+    <div id="result-container"></div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbarContainer').innerHTML = data;
+                    M.AutoInit();
+                });
+
+            const yearSelect = document.getElementById('yearSelect');
+            const monthSelect = document.getElementById('monthSelect');
+            const resultContainer = document.getElementById('result-container');
+            let jsonData;
+
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    jsonData = data;
+                    filterData();
+                })
+                .catch(error => console.error('Error al cargar el archivo JSON:', error));
+
+            const displayData = (data) => {
+                resultContainer.innerHTML = '';
+
+                const table = document.createElement('table');
+                table.className = 'data-table';
+
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+                const headers = ['Titulo', 'Valor 1', 'Valor 2', 'Valor Alcanzado', 'Valor Esperado', 'Diferencia'];
+
+                headers.forEach(headerText => {
+                    const th = document.createElement('th');
+                    th.appendChild(document.createTextNode(headerText));
+                    headerRow.appendChild(th);
+                });
+
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+
+                const tbody = document.createElement('tbody');
+
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    const values = [
+                        item.titulo,
+                        item['valor 1'].toFixed(2),
+                        item['valor 2'].toFixed(2),
+                        item['valor alcanzado'].toFixed(2),
+                        item['valor esperado'].toFixed(2),
+                        item.diferencia.toFixed(2)
+                    ];
+
+                    values.forEach((value, index) => {
+                        const td = document.createElement('td');
+
+                        if (index === 0) {
+                            td.className = 'title';
+                        } else if (index === 3) {
+                            td.className = 'valor-alcanzado';
+                        } else if (index === 5) {
+                            td.className = 'diferencia';
+                            const floatValue = parseFloat(value);
+                            if (floatValue > 0) {
+                                td.style.color = 'green';
+                            } else if (floatValue < 0) {
+                                td.style.color = 'red';
+                            }
+                        }
+
+                        td.appendChild(document.createTextNode(value));
+                        row.appendChild(td);
+                    });
+
+                    tbody.appendChild(row);
+                });
+
+                table.appendChild(tbody);
+                resultContainer.appendChild(table);
+            };
+
+            window.filterData = () => {
+                const selectedYear = parseInt(yearSelect.value);
+                const selectedMonth = monthSelect.value.toLowerCase();
+                const filteredData = jsonData.filter(item => {
+                    const itemYear = item.año === selectedYear;
+                    const itemMonth = item.mes.toLowerCase() === selectedMonth;
+                    return itemYear && itemMonth;
+                });
+
+                displayData(filteredData);
+            };
+        });
+    </script>
+</body>
+</html>

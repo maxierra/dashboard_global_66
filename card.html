@@ -1,0 +1,132 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Tarjetas con Iconos y Flechas</title>
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
+  <style>
+    
+    
+    .card {
+      border: 1px solid blue;
+      border-radius: 18px;
+      padding: 16px;
+      margin: 16px;
+      width: 200px;
+      text-align: center;
+      background-color: white;
+      color: black;
+      transition: transform 0.3s ease-in-out;
+    }
+
+    .card:hover {
+      transform: scale(1.25);
+    }
+
+    .group {
+      display: flex;
+      flex-wrap: wrap;
+      justify-content: space-around;
+    }
+
+    .icon {
+      font-size: 48px;
+      margin-bottom: 8px;
+      color: rgb(12, 34, 239); /* Color del icono */
+    }
+
+    .valor-alcanzado {
+      font-size: 24px;
+      font-weight: bold;
+    }
+
+    .titulo {
+      color: black; /* Color del título */
+    }
+
+    .flecha-up { color: #087b38; font-weight: bold; font-size: 25px;}
+    .flecha-down { color: #f52710; font-weight: bold;font-size: 25px; }
+  </style>
+</head>
+<body>
+
+<script>
+  function crearTarjeta(titulo, valorAlcanzado, valorDeseado = 99.83) {
+    const card = document.createElement('div');
+    card.className = 'card';
+
+    const iconoElemento = document.createElement('i');
+    iconoElemento.className = `icon ${obtenerClaseIcono(titulo)}`;
+
+    const tituloElemento = document.createElement('h2');
+    tituloElemento.className = 'titulo';
+    tituloElemento.textContent = titulo;
+
+    const valorAlcanzadoElemento = document.createElement('p');
+    valorAlcanzadoElemento.innerHTML = `<span class="valor-alcanzado">${valorAlcanzado}%</span>`;
+
+    const valorDeseadoElemento = document.createElement('p');
+    valorDeseadoElemento.textContent = `Valor Deseado: ${valorDeseado}%`;
+
+    const diferenciaElemento = document.createElement('p');
+    const diferencia = valorAlcanzado - valorDeseado;
+
+    if (diferencia > 0) {
+      // Flecha verde hacia arriba si la diferencia es positiva
+      diferenciaElemento.innerHTML = `Diferencia: +${diferencia.toFixed(2)}% <i class="fas fa-arrow-up flecha-up"></i>`;
+    } else if (diferencia < 0) {
+      // Flecha roja hacia abajo si la diferencia es negativa
+      diferenciaElemento.innerHTML = `Diferencia: ${diferencia.toFixed(2)}% <i class="fas fa-arrow-down flecha-down"></i>`;
+    } else {
+      // No hay diferencia
+      diferenciaElemento.textContent = 'Diferencia: 0%';
+    }
+
+    card.appendChild(iconoElemento);
+    card.appendChild(tituloElemento);
+    card.appendChild(valorAlcanzadoElemento);
+    card.appendChild(valorDeseadoElemento);
+    card.appendChild(diferenciaElemento);
+
+    return card;
+  }
+
+  function obtenerClaseIcono(titulo) {
+    const iconos = {
+      'Autorizaciones': 'fas fa-check-circle',
+      'Disponibilidad': 'fas fa-cogs',
+      'Tiempo de Respuesta': 'far fa-clock',
+      'Procesadas chile': 'fas fa-tasks',
+      'procesadas peru': 'fas fa-check-circle',
+      'Disponibilidad mastercard': 'fas fa-credit-card',
+      'disponibilidad mambu': 'fas fa-cloud',
+      'disponibilidad global 66': 'fas fa-globe'
+    };
+
+    return iconos[titulo] || 'fas fa-question-circle';
+  }
+
+  const group1 = document.createElement('div');
+  group1.className = 'group';
+
+  group1.appendChild(crearTarjeta('Autorizaciones', 99.97, 99.83));
+  group1.appendChild(crearTarjeta('Disponibilidad', 98.2, 99.83));
+  group1.appendChild(crearTarjeta('Tiempo de Respuesta', 95.7, 99.83));
+  group1.appendChild(crearTarjeta('Procesadas chile', 99.1, 99.83));
+
+  // Crear tarjetas para el segundo grupo
+  const group2 = document.createElement('div');
+  group2.className = 'group';
+
+  group2.appendChild(crearTarjeta('procesadas peru', 96.8, 99.83));
+  group2.appendChild(crearTarjeta('Disponibilidad mastercard', 97.5, 99.83));
+  group2.appendChild(crearTarjeta('disponibilidad mambu', 94.3, 99.83));
+  group2.appendChild(crearTarjeta('disponibilidad global 66', 98.9, 99.83));
+
+  document.body.appendChild(group1);
+  document.body.appendChild(group2);
+</script>
+
+</body>
+</html>

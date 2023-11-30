@@ -1,0 +1,92 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css">
+  <style>
+    nav {
+      background-color: #fff; /* Cambiar a #ccc para gris o cualquier otro color */
+      color: #000; /* Cambiar a #fff para texto blanco */
+    }
+    nav ul a {
+      color: #000; /* Cambiar a #fff para texto blanco */
+    }
+    nav ul a i {
+      color: #3498db; /* Cambiar a tu color deseado */
+    }
+  </style>
+  <title>Dashboard</title>
+</head>
+
+<body>
+
+<nav>
+  <div class="nav-wrapper">
+    <a href="#" class="brand-logo"><img src="bizland.jpeg" alt="Logo" style="height: 64px;"></a>
+    <ul id="nav-mobile" class="right hide-on-med-and-down">
+      <li><a href="principal.html"><i class="fas fa-home"></i> Inicio</a></li>
+      <li class="right-align">
+        <a class="dropdown-trigger" href="#" data-target="indicadoresDropdown"><i class="fas fa-tachometer-alt" style="color: #FFD700;"></i> Indicadores</a>
+        <ul id="indicadoresDropdown" class="dropdown-content">
+          <li><a href="kpi.html" onclick="cerrarSubMenu()">Indicadores KPi</a></li>
+          <li><a href="metricas.html" onclick="cerrarSubMenu()">Metricas</a></li>
+          <li><a href="indicadores_historicos.html" onclick="cerrarSubMenu()">Indicadores históricos</a></li>
+        </ul>
+      </li>
+      <li class="right-align">
+        <a class="dropdown-trigger" href="#" data-target="transaccionesDropdown"><i class="fas fa-exchange-alt" style="color: #e74c3c;"></i> Transacciones</a>
+        <ul id="transaccionesDropdown" class="dropdown-content">
+          <li><a href="transacciones.html" onclick="cerrarSubMenu()">Aprobadas</a></li>
+          <li><a href="rechazos.html" onclick="cerrarSubMenu()">Rechazadas</a></li>
+        </ul>
+      </li>
+      <li class="right-align">
+        <a class="dropdown-trigger" href="#" data-target="tarjetasDropdown"><i class="fas fa-credit-card" style="color: #2ecc71;"></i> Tarjetas</a>
+        <ul id="tarjetasDropdown" class="dropdown-content">
+          <li><a href="evolucion_tarjetas.html" onclick="cerrarSubMenu()">Evolución de Tarjetas</a></li>
+        </ul>
+      </li>
+      <li class="right-align">
+        <a class="dropdown-trigger" href="#" data-target="apisDropdown"><i class="fas fa-network-wired" style="color: #e67e22;"></i> APIs</a>
+        <ul id="apisDropdown" class="dropdown-content">
+          <li><a href="apis_evolucion.html" onclick="cerrarSubMenu()">Apis Evolucion</a></li>
+        </ul>
+        <ul id="apisDropdown" class="dropdown-content">
+          <li><a href="apis2.html" onclick="cerrarSubMenu()">Reportes APIs</a></li>
+        </ul>
+      </li>
+      <li class="right-align">
+        <a class="dropdown-trigger" href="#" data-target="reportesDropdown"><i class="fas fa-chart-pie" style="color: #9b59b6;"></i> Reportes</a>
+        <ul id="reportesDropdown" class="dropdown-content">
+          <li><a href="incidencias.html" onclick="cerrarSubMenu()">Reporte incidencias</a></li>
+          <li><a href="tareas_programadas.html" onclick="cerrarSubMenu()">Reporte tareas programadas</a></li>
+          <li><a href="#" onclick="cerrarSubMenu()">Novedades y proximos avances</a></li>
+          <li><a href="reportes_historicos.html" onclick="cerrarSubMenu()">Reportes historicos</a></li>
+        </ul>
+      </li>
+      <li><a href="index.html"><i class="fas fa-sign-out-alt" style="color: #c0392b;"></i> Cerrar Sesión</a></li>
+    </ul>
+  </div>
+</nav>
+
+<script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+<script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+<script>
+  // Inicializa los elementos de despliegue de Materialize
+  $(document).ready(function(){
+    $('.dropdown-trigger').dropdown({
+      coverTrigger: false
+    });
+  });
+
+  // Función para cerrar el submenú
+  function cerrarSubMenu() {
+    $('.dropdown-content').removeClass('active');
+  }
+</script>
+</body>
+
+</html>

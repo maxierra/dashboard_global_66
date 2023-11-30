@@ -1,0 +1,210 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Performance Indicators</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-xxxxxx" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        body {
+            display: flex;
+            flex-direction: column;
+            align-items: center;
+            justify-content: center;
+            height: 100vh;
+            margin: 0;
+            padding: 0;
+            font-family: Arial, sans-serif;
+        }
+
+        #navbarContainer {
+            width: 100%;
+            position: fixed;
+            top: 0;
+            z-index: 1000;
+        }
+
+        #filters {
+            display: flex;
+            justify-content: center;
+            margin-top: 64px; /* Ajusta el margen superior para evitar que los elementos se superpongan con la barra fija */
+            margin-bottom: 10px; /* Reducción del margen inferior */
+        }
+
+        #filters label, #filters select, #filters button {
+            margin-right: 10px;
+        }
+
+        #result-container {
+            display: flex;
+            flex-wrap: wrap;
+            justify-content: center;
+            margin-top: 10px; /* Reducción del margen superior */
+        }
+
+        .data-table {
+            border-collapse: collapse;
+            width: 100%;
+            margin-top: 10px; /* Reducción del margen superior */
+        }
+
+        .data-table th, .data-table td {
+            border: 1px solid #ddd;
+            padding: 8px;
+            text-align: left;
+        }
+
+        .data-table th {
+            background-color: #f2f2f2;
+        }
+
+        .data-table td.title, .data-table td.valor-alcanzado {
+            font-weight: bold;
+        }
+
+        .data-table td.diferencia {
+            font-weight: bold;
+            /* Añadir estilos adicionales según sea necesario */
+        }
+    </style>
+</head>
+<body>
+    <div id="navbarContainer" class="navbar-fixed"></div>
+    <h1>METRICAS</h1>
+
+    <div id="filters">
+        <label for="yearSelect">Año:</label>
+        <select id="yearSelect">
+            <option value="2023">2023</option>
+            <!-- Puedes agregar más años según sea necesario -->
+        </select>
+
+        <label for="monthSelect">Mes:</label>
+        <select id="monthSelect">
+            <option value="junio">Junio</option>
+            <option value="julio">Julio</option>
+            <option value="agosto">Agosto</option>
+            <option value="septiembre">Septiembre</option>
+            <option value="octubre" selected>Octubre</option>
+         
+            <!-- Puedes agregar más meses según sea necesario -->
+        </select>
+
+        <button onclick="filterData()">Filtrar</button>
+    </div>
+
+    <div id="result-container"></div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cargar la barra de navegación desde el archivo navbar.html
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbarContainer').innerHTML = data;
+                    // Inicializar los elementos de Materialize después de cargar la barra de navegación
+                    M.AutoInit();
+                });
+
+            // Obtener elementos y datos necesarios
+            const yearSelect = document.getElementById('yearSelect');
+            const monthSelect = document.getElementById('monthSelect');
+            const resultContainer = document.getElementById('result-container');
+            let jsonData; // Almacena los datos originales
+
+            // Hacer la solicitud para cargar el archivo JSON
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    jsonData = data; // Almacenar los datos originales
+                    filterData(); // Llamar a la función de filtrado al cargar los datos
+                })
+                .catch(error => console.error('Error al cargar el archivo JSON:', error));
+
+            // Función para mostrar datos en el contenedor
+            const displayData = (data) => {
+                resultContainer.innerHTML = '';
+
+                // Crear y mostrar la tabla
+                const table = document.createElement('table');
+                table.className = 'data-table';
+
+                // Crear encabezado de la tabla
+                const thead = document.createElement('thead');
+                const headerRow = document.createElement('tr');
+                const headers = ['Titulo', 'Valor 1', 'Valor 2', 'Valor Alcanzado', 'Valor Esperado', 'Diferencia'];
+
+                headers.forEach(headerText => {
+                    const th = document.createElement('th');
+                    th.appendChild(document.createTextNode(headerText));
+                    headerRow.appendChild(th);
+                });
+
+                thead.appendChild(headerRow);
+                table.appendChild(thead);
+
+                // Crear cuerpo de la tabla
+                const tbody = document.createElement('tbody');
+
+                // Iterar sobre los datos y agregar filas a la tabla
+                data.forEach(item => {
+                    const row = document.createElement('tr');
+                    const values = [
+                        item.titulo,
+                        item['valor 1'].toFixed(2),
+                        item['valor 2'].toFixed(2),
+                        item['valor alcanzado'].toFixed(2),
+                        item['valor esperado'].toFixed(2),
+                        item.diferencia.toFixed(2)
+                    ];
+
+                    values.forEach((value, index) => {
+                        const td = document.createElement('td');
+
+                        // Añadir clases según la columna
+                        if (index === 0) {
+                            td.className = 'title';
+                        } else if (index === 3) {
+                            td.className = 'valor-alcanzado';
+                        } else if (index === 5) {
+                            td.className = 'diferencia';
+                            // Estilizar la columna de "Diferencia"
+                            const floatValue = parseFloat(value);
+                            if (floatValue > 0) {
+                                td.style.color = 'green';
+                            } else if (floatValue < 0) {
+                                td.style.color = 'red';
+                            }
+                        }
+
+                        td.appendChild(document.createTextNode(value));
+                        row.appendChild(td);
+                    });
+
+                    tbody.appendChild(row);
+                });
+
+                table.appendChild(tbody);
+                resultContainer.appendChild(table);
+            };
+
+            // Función para filtrar datos en función del año y mes seleccionados
+            window.filterData = () => {
+                const selectedYear = parseInt(yearSelect.value);
+                const selectedMonth = monthSelect.value.toLowerCase();
+                const filteredData = jsonData.filter(item => {
+                    const itemYear = item.año === selectedYear;
+                    const itemMonth = item.mes.toLowerCase() === selectedMonth;
+                    return itemYear && itemMonth;
+                });
+
+                displayData(filteredData);
+            };
+        });
+    </script>
+</body>
+</html>

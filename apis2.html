@@ -1,0 +1,128 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <title>Tabla y Gráfico desde Excel</title>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.17.4/xlsx.full.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+    <style>
+        .container {
+            display: flex;
+            justify-content: space-between;
+        }
+
+        .table-container {
+            width: 30%;
+        }
+
+        table {
+            border-collapse: collapse;
+            width: 100%;
+            height: 70%;
+        }
+
+        th, td {
+            border: 1px solid #dddddd;
+            text-align: center;
+            padding: 2px;
+            font-weight: bold;
+            font-size: 10px;
+        }
+
+        .chart-container {
+            width: 50%;
+        }
+
+        .api-container {
+            border: 1px solid #dddddd;
+            padding: 10px;
+            text-align: center;
+        }
+
+        .entity-select {
+            width: 100%;
+        }
+    </style>
+</head>
+<body>
+    <div id="navbarContainer"></div>
+    <div class="api-container">
+        <h2>DETALLES APIS</h2>
+        <input type="file" id="excel-file" accept=".xlsx" />
+        <select class="entity-select" id="entity-select"></select>
+        <button id="load-data-button">Cargar Datos</button>
+        <div class="container">
+            <div class="table-container" id="table-container"></div>
+            <div class="chart-container">
+                <canvas id="chart-container"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        let excelData = [];
+
+        document.getElementById('load-data-button').addEventListener('click', loadSelectedData);
+
+        document.getElementById('excel-file').addEventListener('change', handleFile);
+
+        function handleFile(e) {
+            const file = e.target.files[0];
+
+            if (file) {
+                const reader = new FileReader();
+                reader.onload = function (e) {
+                    const data = new Uint8Array(e.target.result);
+                    const workbook = XLSX.read(data, { type: 'array' });
+
+                    // Inicializa un array para almacenar datos de todas las hojas.
+                    excelData = [];
+
+                    workbook.SheetNames.forEach(sheetName => {
+                        const sheet = workbook.Sheets[sheetName];
+                        const sheetData = XLSX.utils.sheet_to_json(sheet);
+                        excelData = excelData.concat(sheetData);
+                    });
+
+                    // Actualiza las opciones del desplegable con las identidades encontradas
+                    updateEntitySelect();
+                };
+                reader.readAsArrayBuffer(file);
+            }
+        }
+
+        function updateEntitySelect() {
+            const entitySelect = document.getElementById('entity-select');
+            const entities = [...new Set(excelData.map(row => row.ENTITYNAME))];
+            entitySelect.innerHTML = ''; // Limpiar opciones anteriores
+
+            entities.forEach(entity => {
+                const option = document.createElement('option');
+                option.value = entity;
+                option.textContent = entity;
+                entitySelect.appendChild(option);
+            });
+        }
+
+        function loadSelectedData() {
+            const selectedEntity = document.getElementById('entity-select').value;
+            const filteredData = excelData.filter(row => row.ENTITYNAME === selectedEntity);
+
+            if (filteredData.length > 0) {
+                const groupedData = groupAndCalculateData(filteredData);
+                const sortedData = sortDataByDate(groupedData);
+                const table = createTable(sortedData);
+                document.getElementById('table-container').innerHTML = '';
+                document.getElementById('table-container').appendChild(table);
+
+                const chartData = createChartData(sortedData);
+                createLineChart(chartData);
+            } else {
+                document.getElementById('table-container').innerHTML = 'No se encontraron datos para la entidad seleccionada.';
+                document.getElementById('chart-container').innerHTML = '';
+            }
+        }
+
+        // Resto del código...
+    </script>
+</body>
+</html>

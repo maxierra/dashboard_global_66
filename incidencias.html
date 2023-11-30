@@ -1,0 +1,205 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Key Performance Indicators</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-xxxxxx" crossorigin="anonymous" />
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <style>
+        /* Estilos adicionales para las tablas */
+        .data-table {
+            margin-bottom: 20px;
+            border-collapse: collapse;
+        }
+
+        .data-table th, .data-table td {
+            padding: 8px;
+            text-align: left;
+            border: 1px solid #ddd;
+        }
+
+        .data-table th {
+            background-color: #f2f2f2;
+        }
+
+        .data-table tbody tr:hover {
+            background-color: #f5f5f5;
+        }
+
+        .table1 {
+            width: 30%;
+        }
+
+        .table2 {
+            width: 100%;
+        }
+    </style>
+</head>
+
+<body>
+    <div id="navbarContainer" class="navbar-fixed"></div>
+
+    <h4>Reporte Incidencias</h4>
+
+    <div id="result-container"></div>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/xlsx/0.16.0/xlsx.full.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbarContainer').innerHTML = data;
+                    M.AutoInit();
+                });
+
+            const yearSelect = document.getElementById('yearSelect');
+            const monthSelect = document.getElementById('monthSelect');
+            const resultContainer = document.getElementById('result-container');
+            let jsonData;
+
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    jsonData = data;
+                    filterData();
+                })
+                .catch(error => console.error('Error al cargar el archivo JSON:', error));
+
+            // Llama a handleExcelFile directamente con el nombre del archivo
+            handleExcelFile('SLA.XLSX');
+        });
+
+        function handleExcelFile(fileName) {
+            fetch(fileName)
+                .then(response => response.blob())
+                .then(blob => {
+                    const reader = new FileReader();
+
+                    reader.onload = function (e) {
+                        const data = e.target.result;
+                        const workbook = XLSX.read(data, { type: 'binary' });
+
+                        // Obtén los datos de la hoja 1 y hoja 2
+                        const dataSheet1 = XLSX.utils.sheet_to_json(workbook.Sheets['hoja1']);
+                        const dataSheet2 = XLSX.utils.sheet_to_json(workbook.Sheets['hoja2']);
+
+                        // Combina o procesa los datos según sea necesario
+                        const combinedData = processData(dataSheet1, dataSheet2);
+
+                        // Muestra los datos en las tablas
+                        displayData(combinedData);
+                    };
+
+                    reader.readAsBinaryString(blob);
+                })
+                .catch(error => console.error('Error al cargar el archivo Excel:', error));
+        }
+
+        function processData(sheet1, sheet2) {
+            // Puedes combinar o procesar los datos de ambas hojas según tus necesidades.
+            // En este ejemplo, simplemente se combinan en un solo objeto.
+            return { sheet1, sheet2 };
+        }
+
+        function displayData(combinedData) {
+            // Muestra los datos en las tablas según la estructura proporcionada
+            // Para este ejemplo, simplemente se imprimen los datos en la consola.
+
+            console.log('Tabla 1 (hoja1):');
+            console.table(combinedData.sheet1);
+
+            console.log('Tabla 2 (hoja2):');
+            console.table(combinedData.sheet2);
+
+            // Añade el código para mostrar las tablas en la interfaz web
+            const resultContainer = document.getElementById('result-container');
+
+            const table1 = createTable(combinedData.sheet1, 'table1');
+            const table2 = createTable(combinedData.sheet2, 'table2');
+
+            resultContainer.innerHTML = ''; // Limpia el contenedor antes de agregar las tablas
+            resultContainer.appendChild(table1);
+            resultContainer.appendChild(table2);
+        }
+
+        function createTable(data, tableClass) {
+            const table = document.createElement('table');
+            table.className = `data-table ${tableClass}`;
+
+            const thead = document.createElement('thead');
+            const headerRow = document.createElement('tr');
+
+            Object.keys(data[0]).forEach(key => {
+                const th = document.createElement('th');
+                th.appendChild(document.createTextNode(key));
+                headerRow.appendChild(th);
+            });
+
+            thead.appendChild(headerRow);
+            table.appendChild(thead);
+
+            const tbody = document.createElement('tbody');
+
+            data.forEach(item => {
+                const row = document.createElement('tr');
+
+                Object.entries(item).forEach(([key, value]) => {
+                    const td = document.createElement('td');
+                    td.appendChild(document.createTextNode(formatCellValue(key, value)));
+                    row.appendChild(td);
+                });
+
+                tbody.appendChild(row);
+            });
+
+            table.appendChild(tbody);
+
+            return table;
+        }
+
+        function filterData() {
+            // Esta función se mantiene como estaba en tu código original
+            const selectedYear = parseInt(yearSelect.value);
+            const selectedMonth = monthSelect.value.toLowerCase();
+            const filteredData = jsonData.filter(item => {
+                const itemYear = item.año === selectedYear;
+                const itemMonth = item.mes.toLowerCase() === selectedMonth;
+                return itemYear && itemMonth;
+            });
+
+            displayData(filteredData);
+        }
+
+        function formatCellValue(key, value) {
+            // Formatear las celdas según la clave (key)
+            if (key.includes('Date') && !isNaN(parseExcelDate(value))) {
+                // Formatear fechas
+                return parseExcelDate(value).toLocaleString();
+            } else if (!isNaN(value)) {
+                // Formatear números
+                return parseFloat(value).toFixed(2);
+            }
+            return value;
+        }
+
+        function parseExcelDate(excelDate) {
+            // La fecha y hora en Excel se almacena como el número de días desde 01/01/1900
+            // y la fracción del día representada como el tiempo fraccional.
+            const daysSinceEpoch = Math.floor(excelDate);
+            const millisecondsPerDay = 24 * 60 * 60 * 1000;
+            const millisecondsSinceEpoch = (daysSinceEpoch - 1) * millisecondsPerDay;
+            const timeFraction = excelDate - daysSinceEpoch;
+            const millisecondsToday = timeFraction * millisecondsPerDay;
+            const date = new Date(millisecondsSinceEpoch + millisecondsToday);
+            return date;
+        }
+    </script>
+</body>
+
+</html>

@@ -1,0 +1,56 @@
+<!DOCTYPE html>
+<html>
+<head>
+    <meta charset="utf-8">
+    <title>Descarga de archivos PDF</title>
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <style>
+
+    </style>
+</head>
+<body>
+    <div id="navbarContainer"></div>
+  
+
+    <div class="container">
+        <h4 class="mt-4">INFORMES HISTÓRICOS</h4>
+        <ul class="list-group mt-4">
+            <li class="list-group-item">
+                <a href="Reporte Mayo 2023.pptx" download="Reporte_Mayo_2023.pptx">Descargar Presentación Mayo 2023</a>
+            </li>
+            <li class="list-group-item">
+                <a href="Reporte Junio_2023.pptx"" download="Reporte_junio_2023.pptx">Descargar Presentación Junio 2023</a>
+            </li>
+            <li class="list-group-item">
+                <a href="Reporte Julio_2023.pptx" download="Reporte Julio_2023.pptx">Descargar Presentación Julio 2023</a>
+            </li>
+            <li class="list-group-item">
+                <a href="Reporte Agosto_2023.pptx" download="Reporte Agosto_2023.pptx">Descargar Presentación Agosto 2023</a>
+            </li>
+            <!-- Agrega más enlaces para otros archivos PPTX según sea necesario -->
+            <li class="list-group-item">
+                <a href="Reporte_Septiembre_2023.pptx" download="Reporte_Septiembre_2023.pptx">Descargar Presentación Septiembre 2023</a>
+            </li>
+            <li class="list-group-item">
+                <a href="Reporte_Octubre_2023.pptx" download="Reporte_Octubre_2023.pptx">Descargar Presentación Octubre 2023</a>
+            </li>
+           
+        </ul>
+    </div>
+
+    <script>
+        // Cargar la barra de navegación desde el archivo navbar.html
+        fetch('navbar.html')
+            .then(response => response.text())
+            .then(data => {
+                document.getElementById('navbarContainer').innerHTML = data;
+            })
+            .catch(error => console.error('Error al cargar la barra de navegación:', error));
+
+    
+    </script>
+</body>
+</html>
+

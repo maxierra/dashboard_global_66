@@ -1,0 +1,189 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Transacciones</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+</head>
+
+<body>
+    <div id="navbarContainer"></div>
+    <div class="container">
+        <h4 class="center-align">Transacciones aprobadas</h4>
+        <div class="row">
+            <div class="input-field col s6">
+                <select id="filtroAno">
+                    <option value="" disabled selected>Seleccionar Año</option>
+                    <option value="2023">2023</option>
+                    <option value="2024">2024</option>
+                </select>
+                <label>Año</label>
+            </div>
+            <div class="input-field col s6">
+                <select id="filtroMes">
+                    <option value="" disabled selected>Seleccionar Mes</option>
+                    <option value="junio">Junio</option>
+                    <option value="julio">Julio</option>
+                    <option value="agosto">Agosto</option>
+                    <option value="septiembre">Septiembre</option>
+                    <option value="octubre">Octubre</option>
+                </select>
+                <label>Mes</label>
+            </div>
+        </div>
+        <div class="row">
+            <button class="btn waves-effect waves-light" type="button" onclick="cargarTabla()">Cargar Tabla
+                <i class="material-icons right">send</i>
+            </button>
+        </div>
+        <div class="row">
+            <table class="striped responsive-table" id="tablaTransacciones"></table>
+        </div>
+        <div class="row">
+            <div class="col s6">
+                <canvas id="graficoChile" width="200" height="200"></canvas>
+            </div>
+            <div class="col s6">
+                <canvas id="graficoPeru" width="200" height="200"></canvas>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            // Cargar la barra de navegación desde el archivo navbar.html
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbarContainer').innerHTML = data;
+                    // Inicializar los elementos de Materialize después de cargar la barra de navegación
+                    M.AutoInit();
+                });
+        });
+
+        document.addEventListener('DOMContentLoaded', function () {
+            var elems = document.querySelectorAll('select');
+            var instances = M.FormSelect.init(elems);
+
+            // Establecer valores predeterminados
+            document.getElementById('filtroAno').value = '2023';
+            document.getElementById('filtroMes').value = 'octubre';
+            cargarTabla();
+        });
+
+        function cargarTabla() {
+            var filtroAno = document.getElementById('filtroAno').value;
+            var filtroMes = document.getElementById('filtroMes').value;
+
+            fetch('transacciones.json')
+                .then(response => response.json())
+                .then(data => {
+                    // Filtrar datos según los criterios seleccionados
+                    var datosFiltrados = data.filter(fila =>
+                        (filtroAno === '' || filtroAno === fila.ano) &&
+                        (filtroMes === '' || filtroMes === fila.mes.toLowerCase())
+                    );
+
+                    // Crear y mostrar la tabla
+                    crearTabla(datosFiltrados);
+
+                    // Crear y mostrar los gráficos
+                    crearGraficoCircular('graficoChile', 'Transacciones Chile', filtroAno, filtroMes, 'chile');
+                    crearGraficoCircular('graficoPeru', 'Transacciones Perú', filtroAno, filtroMes, 'peru');
+                })
+                .catch(error => console.error('Error al cargar el archivo JSON:', error));
+        }
+
+        function crearTabla(data) {
+            var tabla = document.getElementById('tablaTransacciones');
+            tabla.innerHTML = ''; // Limpiar tabla
+
+            // Crear encabezado
+            var thead = document.createElement('thead');
+            var trHeader = document.createElement('tr');
+            var columnas = ['País', 'Año', 'Mes', 'Aprobadas', 'Rechazadas', 'Anuladas', 'Suma'];
+            columnas.forEach(col => {
+                var th = document.createElement('th');
+                th.textContent = col;
+                trHeader.appendChild(th);
+            });
+            thead.appendChild(trHeader);
+            tabla.appendChild(thead);
+
+            // Crear cuerpo de la tabla
+            var tbody = document.createElement('tbody');
+            data.forEach(fila => {
+                var tr = document.createElement('tr');
+                var valores = [fila.pais, fila.ano, fila.mes, fila.aprobadas, fila.rechazadas, fila.anuladas, fila.suma];
+                valores.forEach(valor => {
+                    var td = document.createElement('td');
+                    td.textContent = valor;
+                    tr.appendChild(td);
+                });
+                tbody.appendChild(tr);
+            });
+            tabla.appendChild(tbody);
+        }
+
+        function crearGraficoCircular(idCanvas, etiqueta, filtroAno, filtroMes, pais) {
+            // Filtrar datos según el año, mes y país seleccionados
+            fetch('transacciones.json')
+                .then(response => response.json())
+                .then(data => {
+                    var datosFiltrados = data.filter(fila =>
+                        (filtroAno === '' || filtroAno === fila.ano) &&
+                        (filtroMes === '' || filtroMes === fila.mes.toLowerCase()) &&
+                        fila.pais.toLowerCase() === pais
+                    );
+
+                    var canvas = document.getElementById(idCanvas);
+                    var ctx = canvas.getContext('2d');
+
+                    var etiquetas = ['Aprobadas', 'Rechazadas', 'Anuladas'];
+                    var valores = etiquetas.map(etiqueta => {
+                        var valor = datosFiltrados.reduce((acumulador, fila) => acumulador + parseInt(fila[etiqueta.toLowerCase()]), 0);
+                        return valor;
+                    });
+
+                    var colores = ['#4CAF50', '#FF5252', '#9E9E9E'];
+
+                    // Destruir la instancia anterior del gráfico si existe
+                    Chart.getChart(idCanvas)?.destroy();
+
+                    new Chart(ctx, {
+                        type: 'doughnut',
+                        data: {
+                            labels: etiquetas,
+                            datasets: [{
+                                data: valores,
+                                backgroundColor: colores,
+                            }],
+                        },
+                        options: {
+                            responsive: true,
+                            maintainAspectRatio: false,
+                            cutoutPercentage: 50, // Ajuste para hacerlo parecer en 3D
+                            plugins: {
+                                title: {
+                                    display: true,
+                                    text: etiqueta,
+                                },
+                                legend: {
+                                    display: true,
+                                    position: 'top',
+                                },
+                            },
+                        },
+                    });
+                })
+                .catch(error => console.error('Error al cargar el archivo JSON:', error));
+        }
+    </script>
+</body>
+
+</html>

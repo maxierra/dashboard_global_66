@@ -1,0 +1,149 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/chart.js@3.7.0/dist/chart.min.js"></script>
+    <title>Tu Página con Barra de Navegación, Tabla y Gráfico</title>
+    <style>
+        .container {
+            max-width: 600px; /* Reducir el ancho máximo de la tabla */
+            margin: 0 auto;
+        }
+
+        .chart-container {
+            max-width: 900px; /* Reducir el ancho máximo del gráfico */
+            margin: 20px auto;
+        }
+
+        canvas {
+            width: 100% !important; /* Ajustar el ancho del gráfico al contenedor */
+        }
+
+        table {
+            font-size: 12px; /* Reducir el tamaño de la fuente en la tabla */
+        }
+    </style>
+</head>
+<body>
+    <!-- Barra de Navegación Personalizada -->
+    <div id="navbarContainer"></div>
+
+    <!-- Contenido de la Página -->
+    <div class="container mt-4">
+        <h5 class="center">Evolución de Cuentas Activas</h5>
+        <div class="chart-container">
+            <canvas id="myChart"></canvas>
+        </div>
+    </div>
+    
+    <div class="container">
+        <table class="table table-bordered">
+            <thead>
+                <tr>
+                    <th>Cuentas Activas</th>
+                    <th>ene-23</th>
+                    <th>feb-23</th>
+                    <th>mar-23</th>
+                    <th>abr-23</th>
+                    <th>may-23</th>
+                    <th>jun-23</th>
+                    <th>jul-23</th>
+                    <th>ago-23</th>
+                    <th>sep-23</th>
+                    <th>oct-23</th>
+                </tr>
+            </thead>
+            <tbody>
+                <tr>
+                    <td>CHILE</td>
+                    <td>9341</td>
+                    <td>10608</td>
+                    <td>10532</td>
+                    <td>8981</td>
+                    <td>9374</td>
+                    <td>9319</td>
+                    <td>9427</td>
+                    <td>10426</td>
+                    <td>14970</td>
+                    <td>19583</td>
+                </tr>
+                <tr>
+                    <td>PERU</td>
+                    <td>9794</td>
+                    <td>8593</td>
+                    <td>7102</td>
+                    <td>7345</td>
+                    <td>5638</td>
+                    <td>6036</td>
+                    <td>6414</td>
+                    <td>7015</td>
+                    <td>8330</td>
+                    <td>9407</td>
+                </tr>
+                <tr>
+                    <td><strong>Total</strong></td>
+                    <td><strong>19135</strong></td>
+                    <td><strong>19201</strong></td>
+                    <td><strong>17634</strong></td>
+                    <td><strong>16326</strong></td>
+                    <td><strong>15012</strong></td>
+                    <td><strong>15355</strong></td>
+                    <td><strong>15841</strong></td>
+                    <td><strong>17441</strong></td>
+                    <td><strong>23300</strong></td>
+                    <td><strong>28990</strong></td>
+                </tr>
+            </tbody>
+        </table>
+    </div>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+            // Cargar la barra de navegación desde el archivo navbar.html
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbarContainer').innerHTML = data;
+                    // Inicializa los elementos de Materialize después de cargar la barra de navegación
+                    M.AutoInit();
+                    // Aquí también puedes inicializar los elementos específicos de tu barra de navegación
+                })
+                .catch(error => console.error('Error al cargar la barra de navegación:', error));
+
+            // Datos del gráfico
+            var ctx = document.getElementById('myChart').getContext('2d');
+            var myChart = new Chart(ctx, {
+                type: 'line',
+                data: {
+                    labels: ['ene-23', 'feb-23', 'mar-23', 'abr-23', 'may-23', 'jun-23', 'jul-23', 'ago-23', 'sep-23', 'oct-23'],
+                    datasets: [
+                        {
+                            label: 'CHILE',
+                            data: [9341, 10608, 10532, 8981, 9374, 9319, 9427, 10426, 14970, 19583],
+                            borderColor: 'blue',
+                            fill: false
+                        },
+                        {
+                            label: 'PERU',
+                            data: [9794, 8593, 7102, 7345, 5638, 6036, 6414, 7015, 8330, 9407],
+                            borderColor: 'green',
+                            fill: false
+                        }
+                    ]
+                },
+                options: {
+                    scales: {
+                        y: {
+                            beginAtZero: true
+                        }
+                    }
+                }
+            });
+        });
+    </script>
+</body>
+</html>

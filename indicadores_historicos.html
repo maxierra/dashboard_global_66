@@ -1,0 +1,188 @@
+<!DOCTYPE html>
+<html lang="es">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Tabla de Datos con Gráfico</title>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
+</head>
+
+<body>
+    <div id="navbarContainer"></div>
+
+    <div class="content-container" id="result-container"></div>
+
+    <style>
+        /* Estilo para contenedor de cada gráfico y tabla */
+        .chart-container {
+            width: 45%; /* Ancho del contenedor */
+            margin: 10px;
+            display: inline-block;
+        }
+
+        /* Hace que los gráficos sean responsive */
+        canvas {
+            max-width: 100%;
+        }
+
+        /* Ajustes específicos de Materialize */
+        table {
+            width: 100%;
+            margin-top: 20px;
+        }
+    </style>
+
+    <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.7.0/chart.min.js"></script>
+
+    <script>
+        document.addEventListener('DOMContentLoaded', () => {
+            fetch('navbar.html')
+                .then(response => response.text())
+                .then(data => {
+                    document.getElementById('navbarContainer').innerHTML = data;
+                    document.getElementById('navbarContainer').classList.add('navbar-fixed');
+                    M.AutoInit();
+                    cargarYMostrarGraficos();
+                })
+                .catch(error => console.error('Error al cargar la barra de navegación:', error));
+        });
+
+        function cargarYMostrarGraficos() {
+            const resultContainer = document.getElementById('result-container');
+
+            fetch('data.json')
+                .then(response => response.json())
+                .then(data => {
+                    const mesesConDatos = [...new Set(data.filter(item => item.mes !== 'noviembre').map(item => item.mes))];
+
+                    // Función para crear gráfico y tabla
+                    const crearGraficoYTabla = (titulo, datos, maxScale) => {
+                        const container = document.createElement('div');
+                        container.classList.add('chart-container');
+
+                        const h5 = document.createElement('h5');
+                        h5.textContent = titulo;
+                        container.appendChild(h5);
+
+                        // Crear y agregar tabla
+                        const table = document.createElement('table');
+                        const tbody = document.createElement('tbody');
+
+                        const valores = ['valor alcanzado', 'valor esperado'];
+
+                        valores.forEach(valor => {
+                            const row = document.createElement('tr');
+                            const tituloCell = document.createElement('td');
+                            tituloCell.appendChild(document.createTextNode(valor));
+                            row.appendChild(tituloCell);
+
+                            mesesConDatos.forEach(mes => {
+                                const mesData = datos.find(item => item.mes === mes);
+                                const td = document.createElement('td');
+                                const value = mesData ? parseFloat(mesData[valor]).toFixed(2) : '';
+                                td.appendChild(document.createTextNode(value));
+                                row.appendChild(td);
+                            });
+
+                            tbody.appendChild(row);
+                        });
+
+                        table.appendChild(tbody);
+                        container.appendChild(table);
+
+                        // Crear y agregar gráfico
+                        const canvas = document.createElement('canvas');
+                        container.appendChild(canvas);
+
+                        const ctx = canvas.getContext('2d');
+                        const valoresAlcanzados = mesesConDatos.map(mes => {
+                            const mesData = datos.find(item => item.mes === mes);
+                            return mesData ? parseFloat(mesData['valor alcanzado']).toFixed(2) : null;
+                        });
+
+                        const valoresEsperados = mesesConDatos.map(mes => {
+                            const mesData = datos.find(item => item.mes === mes);
+                            return mesData ? parseFloat(mesData['valor esperado']).toFixed(2) : null;
+                        });
+
+                        new Chart(ctx, {
+                            type: 'line',
+                            data: {
+                                labels: mesesConDatos,
+                                datasets: [
+                                    {
+                                        label: 'Valor Alcanzado',
+                                        data: valoresAlcanzados,
+                                        borderColor: 'red',
+                                        backgroundColor: 'rgba(255, 0, 0, 0.1)',
+                                    },
+                                    {
+                                        label: 'Valor Esperado',
+                                        data: valoresEsperados,
+                                        borderColor: 'green',
+                                        backgroundColor: 'rgba(0, 255, 0, 0.1)',
+                                    },
+                                ],
+                            },
+                            options: {
+                                scales: {
+                                    y: {
+                                        beginAtZero: false,
+                                        max: maxScale || 100,
+                                        min: 98,
+                                    },
+                                },
+                                plugins: {
+                                    legend: {
+                                        display: true,
+                                        position: 'top',
+                                    },
+                                    title: {
+                                        display: true,
+                                        text: 'Evolución Mensual',
+                                    },
+                                },
+                            },
+                        });
+
+                        return container;
+                    };
+
+                    // Crear y agregar gráfico y tabla para Autorizaciones
+                    const autorizacionesData = data.filter(item => item.titulo === 'autorizaciones');
+                    resultContainer.appendChild(crearGraficoYTabla('Autorizaciones', autorizacionesData));
+
+                   // Crear y agregar gráfico y tabla para Disponibilidad APIs
+                   const disponibilidadApisData = data.filter(item => item.titulo === 'disponibilidad apis');
+                   resultContainer.appendChild(crearGraficoYTabla('Disponibilidad APIs', disponibilidadApisData));
+
+                   // Crear y agregar gráfico y tabla para Tiempos de Respuesta APIs
+                   const tiemposRespuestaApisData = data.filter(item => item.titulo === 'tiempos de respuesta apis');
+                   resultContainer.appendChild(crearGraficoYTabla('Tiempos de Respuesta APIs', tiemposRespuestaApisData, 1000));
+
+                   // Crear y agregar gráfico y tabla para Procesadas Chile
+                   const procesadasChileData = data.filter(item => item.titulo === 'procesadas chile');
+                   resultContainer.appendChild(crearGraficoYTabla('Procesadas Chile', procesadasChileData));
+
+                   // Crear y agregar gráfico y tabla para Procesadas Perú
+                   const procesadasPeruData = data.filter(item => item.titulo === 'procesadas peru');
+                   resultContainer.appendChild(crearGraficoYTabla('Procesadas Perú', procesadasPeruData));
+
+                   // Crear y agregar gráfico y tabla para Disponibilidad MasterCard
+                   const disponibilidadMastercardData = data.filter(item => item.titulo === 'disponibilidad mastercard');
+                   resultContainer.appendChild(crearGraficoYTabla('Disponibilidad MasterCard', disponibilidadMastercardData));
+
+                   // Crear y agregar gráfico y tabla para Disponibilidad Global 66
+                   const disponibilidadGlobal66Data = data.filter(item => item.titulo === 'disponibilidad global 66');
+                   resultContainer.appendChild(crearGraficoYTabla('Disponibilidad Global 66', disponibilidadGlobal66Data));
+
+                })
+                .catch(error => console.error('Error al cargar el archivo JSON:', error));
+        }
+    </script>
+</body>
+
+</html>

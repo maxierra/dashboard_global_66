@@ -1,0 +1,65 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Bienvenidos a Financial Services</title>
+    <!-- Incluye los estilos de Bootstrap y Bootstrap JavaScript -->
+    <link rel="stylesheet" href="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/css/bootstrap.min.css">
+    <script src="https://code.jquery.com/jquery-3.5.1.slim.min.js"></script>
+    <script src="https://cdn.jsdelivr.net/npm/@popperjs/core@2.9.2/dist/umd/popper.min.js"></script>
+    <script src="https://maxcdn.bootstrapcdn.com/bootstrap/4.5.2/js/bootstrap.min.js"></script>
+    <style>
+        body {
+            background-image: url('5.jpg'); /* Ruta de la imagen de fondo */
+            background-size: cover;
+            background-attachment: fixed;
+            margin: 0;
+            display: flex;
+            justify-content: center;
+            align-items: center;
+            height: 100vh;
+        }
+        .login-form {
+            background: rgba(255, 255, 255, 0.8); /* Fondo blanco semitransparente */
+            padding: 20px;
+            border-radius: 10px;
+            box-shadow: 0px 0px 10px rgba(0, 0, 0, 0.5);
+            text-align: center;
+        }
+        .login-form img {
+            width: 270px; /* Ajusta el tamaño de la imagen de inicio de sesión */
+            margin-bottom: 10px;
+            border-radius: 20px; /* Agrega el borde redondeado a la imagen */
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <div class="row justify-content-center">
+            <div class="col-md-4">
+                <div class="login-form">
+                    <img src="bizland.jpeg" alt="Financial Services Logo" class="img-fluid">
+                    <h2 class="mb-4">Bienvenidos a Financial Services</h2>
+                    <form id="loginForm">
+                        <div class="form-group">
+                            <input type="text" class="form-control" id="correo" placeholder="Usuario" required>
+                        </div>
+                        <div class="form-group">
+                            <input type="password" class="form-control" id="contrasena" placeholder="Contraseña" required>
+                        </div>
+                        <button type="submit" class="btn btn-primary btn-block">Iniciar sesión</button>
+                    </form>
+                    <p id="mensaje-error" class="text-danger mt-2"></p>
+                </div>
+            </div>
+        </div>
+    </div>
+    
+    <script src="acceso.js"></script>
+</body>
+</html>
+
+</html>
+
+
