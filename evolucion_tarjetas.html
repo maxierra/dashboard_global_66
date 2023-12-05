@@ -55,6 +55,7 @@
                     <th>ago-23</th>
                     <th>sep-23</th>
                     <th>oct-23</th>
+                    <th>nov-23</th> <!-- Agregado para noviembre -->
                 </tr>
             </thead>
             <tbody>
@@ -70,6 +71,8 @@
                     <td>10426</td>
                     <td>14970</td>
                     <td>19583</td>
+                    <td>26186</td>
+                    
                 </tr>
                 <tr>
                     <td>PERU</td>
@@ -83,6 +86,8 @@
                     <td>7015</td>
                     <td>8330</td>
                     <td>9407</td>
+                    <td>10571</td>
+                    
                 </tr>
                 <tr>
                     <td><strong>Total</strong></td>
@@ -96,6 +101,8 @@
                     <td><strong>17441</strong></td>
                     <td><strong>23300</strong></td>
                     <td><strong>28990</strong></td>
+                    <td><strong>36757</strong></td>
+                   
                 </tr>
             </tbody>
         </table>
@@ -119,17 +126,17 @@
             var myChart = new Chart(ctx, {
                 type: 'line',
                 data: {
-                    labels: ['ene-23', 'feb-23', 'mar-23', 'abr-23', 'may-23', 'jun-23', 'jul-23', 'ago-23', 'sep-23', 'oct-23'],
+                    labels: ['ene-23', 'feb-23', 'mar-23', 'abr-23', 'may-23', 'jun-23', 'jul-23', 'ago-23', 'sep-23', 'oct-23', 'nov-23'], // Agregado para noviembre
                     datasets: [
                         {
                             label: 'CHILE',
-                            data: [9341, 10608, 10532, 8981, 9374, 9319, 9427, 10426, 14970, 19583],
+                            data: [9341, 10608, 10532, 8981, 9374, 9319, 9427, 10426, 14970, 19583, 26186, 31234], // Agregado para noviembre
                             borderColor: 'blue',
                             fill: false
                         },
                         {
                             label: 'PERU',
-                            data: [9794, 8593, 7102, 7345, 5638, 6036, 6414, 7015, 8330, 9407],
+                            data: [9794, 8593, 7102, 7345, 5638, 6036, 6414, 7015, 8330, 9407, 10571, 11853], // Agregado para noviembre
                             borderColor: 'green',
                             fill: false
                         }

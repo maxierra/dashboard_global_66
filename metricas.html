@@ -1,10 +1,12 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <title>Key Performance Indicators</title>
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css" integrity="sha384-xxxxxx" crossorigin="anonymous"/>
+    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/5.15.3/css/all.min.css"
+        integrity="sha384-xxxxxx" crossorigin="anonymous" />
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <style>
         body {
@@ -28,11 +30,13 @@
         #filters {
             display: flex;
             justify-content: center;
-            margin-top: 64px; /* Ajusta el margen superior para evitar que los elementos se superpongan con la barra fija */
-            margin-bottom: 10px; /* Reducción del margen inferior */
+            margin-top: 64px;
+            margin-bottom: 10px;
         }
 
-        #filters label, #filters select, #filters button {
+        #filters label,
+        #filters select,
+        #filters button {
             margin-right: 10px;
         }
 
@@ -40,16 +44,17 @@
             display: flex;
             flex-wrap: wrap;
             justify-content: center;
-            margin-top: 10px; /* Reducción del margen superior */
+            margin-top: 10px;
         }
 
         .data-table {
             border-collapse: collapse;
             width: 100%;
-            margin-top: 10px; /* Reducción del margen superior */
+            margin-top: 10px;
         }
 
-        .data-table th, .data-table td {
+        .data-table th,
+        .data-table td {
             border: 1px solid #ddd;
             padding: 8px;
             text-align: left;
@@ -59,16 +64,17 @@
             background-color: #f2f2f2;
         }
 
-        .data-table td.title, .data-table td.valor-alcanzado {
+        .data-table td.title,
+        .data-table td.valor-alcanzado {
             font-weight: bold;
         }
 
         .data-table td.diferencia {
             font-weight: bold;
-            /* Añadir estilos adicionales según sea necesario */
         }
     </style>
 </head>
+
 <body>
     <div id="navbarContainer" class="navbar-fixed"></div>
     <h1>METRICAS</h1>
@@ -87,7 +93,7 @@
             <option value="agosto">Agosto</option>
             <option value="septiembre">Septiembre</option>
             <option value="octubre" selected>Octubre</option>
-         
+            <option value="noviembre">Noviembre</option>
             <!-- Puedes agregar más meses según sea necesario -->
         </select>
 
@@ -154,12 +160,12 @@
                 data.forEach(item => {
                     const row = document.createElement('tr');
                     const values = [
-                        item.titulo,
-                        item['valor 1'].toFixed(2),
-                        item['valor 2'].toFixed(2),
-                        item['valor alcanzado'].toFixed(2),
-                        item['valor esperado'].toFixed(2),
-                        item.diferencia.toFixed(2)
+                        item.tipo,
+                        item.valor1.toFixed(2),
+                        item.valor2.toFixed(2),
+                        item.valor3.toFixed(2),
+                        item.valor4.toFixed(2),
+                        item.valor5.toFixed(2)
                     ];
 
                     values.forEach((value, index) => {
@@ -192,19 +198,21 @@
                 resultContainer.appendChild(table);
             };
 
-            // Función para filtrar datos en función del año y mes seleccionados
+            // Función para filtrar datos según el año y el mes seleccionados
             window.filterData = () => {
-                const selectedYear = parseInt(yearSelect.value);
-                const selectedMonth = monthSelect.value.toLowerCase();
+                const selectedYear = yearSelect.value;
+                const selectedMonth = monthSelect.value;
+
+                // Filtrar datos basados en el año y el mes seleccionados
                 const filteredData = jsonData.filter(item => {
-                    const itemYear = item.año === selectedYear;
-                    const itemMonth = item.mes.toLowerCase() === selectedMonth;
-                    return itemYear && itemMonth;
+                    return item.año == selectedYear && item.mes.toLowerCase() == selectedMonth.toLowerCase();
                 });
 
+                // Mostrar los datos filtrados
                 displayData(filteredData);
             };
         });
     </script>
 </body>
+
 </html>

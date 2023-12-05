@@ -76,7 +76,7 @@
 
             // Datos para el gráfico
             const chartData = {
-                labels: ['may-23', 'jun-23', 'jul-23', 'ago-23', 'sep-23', 'oct-23'],
+                labels: ['may-23', 'jun-23', 'jul-23', 'ago-23', 'sep-23', 'oct-23','nov-23' ],
                 datasets: []
             };
 
@@ -84,40 +84,39 @@
             const tableData = [
                 {
                     api: 'TokenAccessLevel2Request',
-                    values: [87.5, 84.21, 88.16, 84.23, 84.61, 83.40],
+                    values: [87.5, 84.21, 88.16, 84.23, 84.61, 83.40, 110.90],
                 },
                 {
                     api: 'TarjetaRequest',
-                    values: [743.81, 651.23, 739.17, 783.46, 876.95, 1010.27],
+                    values: [743.81, 651.23, 739.17, 783.46, 876.95, 1010.27, 1412.08],
                 },
                 {
                     api: 'PREPAGAALTATRANSACCIONV2Request',
-                    values: [1345.9, 1377.57, 1477.21, 1452.48, 1465.74, 1668.61],
+                    values: [1345.9, 1377.57, 1477.21, 1452.48, 1465.74, 1668.61, 1678.73],
                 },
                 {
                     api: 'TarjetaHabilitarRequest',
-                    values: [681.82, 619.22, 691.17, 729.59, 810.55, 936.45],
+                    values: [681.82, 619.22, 691.17, 729.59, 810.55, 936.45, 1338.56],
                 },
                 {
                     api: 'TarjetaCambiaPinRequest',
-                    values: [629.19, 605.21, 678.59, 735.37, 944.56, 1043.40],
+                    values: [629.19, 605.21, 678.59, 735.37, 944.56, 1043.40, 1436.37],
                 },
                 {
                     api: 'TarjetaBloquearRequest',
-                    values: [834.12, 779.55, 852.43, 965.10, 1054.76, 1091.04],
+                    values: [834.12, 779.55, 852.43, 965.10, 1054.76, 1091.04, 1991.79],
                 },
                 {
                     api: 'TarjetaDesbloquearRequest',
-                    values: [849.55, 724.19, 888.90, 890.92, 994.82, 1101.03],
+                    values: [849.55, 724.19, 888.90, 890.92, 994.82, 1101.03, 1551.52],
                 },
                 {
                     api: 'TarjetaCambiaEstadoRequest',
-                    values: [758.49, 701.92, 972.44, 1026.10, 991.36, 1067.77],
+                    values: [758.49, 701.92, 972.44, 1026.10, 991.36, 1067.77, 1379.28],
                 },
-             
                 {
                     api: 'Valor esperado',
-                    values: [1000, 1000, 1000, 1000, 1000, 1000],
+                    values: [1000, 1000, 1000, 1000, 1000, 1000, 1000.00],
                 },
             ];
 
@@ -135,7 +134,7 @@
                         title: {
                             display: true,
                             text: 'Rendimiento de APIs',
-                            fontSize: 18,
+                            fontSize: 24, // Tamaño del título aumentado
                         },
                     },
                     scales: {
@@ -163,7 +162,13 @@
                 const row = document.createElement('tr');
                 row.innerHTML = `<td>${apiData.api}</td>`;
                 apiData.values.forEach(value => {
-                    row.innerHTML += `<td>${value}</td>`;
+                    // Aplicar estilo rojo a los valores mayores que 1000
+                    const cell = document.createElement('td');
+                    cell.textContent = value;
+                    if (value > 1000) {
+                        cell.style.color = 'red';
+                    }
+                    row.appendChild(cell);
                 });
                 tableBody.appendChild(row);
 

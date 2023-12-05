@@ -4,10 +4,9 @@
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Key Performance Indicators</title>
+    <title>Indicadores clave de rendimiento</title>
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/css/materialize.min.css">
     <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/font-awesome/6.0.0/css/all.min.css">
-
     <style>
         .value {
             font-size: 2em;
@@ -23,33 +22,23 @@
             margin-bottom: 10px;
         }
 
-        nav {
+        #filters {
             background-color: #fff;
             color: #000;
             width: 100%;
+            text-align: center;
+            padding: 10px;
+            display: flex;
+            justify-content: space-around; /* Muestra los elementos en línea con espacio entre ellos */
+            align-items: center; /* Alinea verticalmente al centro */
         }
 
         nav ul a {
             color: #000;
         }
 
-        nav ul a i {
+        nav ul li {
             color: #3498db;
-        }
-
-        #filters {
-            display: flex;
-            flex-wrap: wrap;
-            justify-content: center;
-            align-items: center;
-            margin-top: 20px;
-            text-align: center;
-        }
-
-        #filters label,
-        #filters select,
-        #filters button {
-            margin: 5px;
         }
 
         #result-container {
@@ -57,6 +46,7 @@
             flex-wrap: wrap;
             justify-content: center;
             margin-top: 20px;
+            text-align: center;
         }
 
         .card {
@@ -90,30 +80,32 @@
 
 <body>
     <div id="navbarContainer"></div>
-
     <div id="filters">
-        <label for="yearSelect">Año:</label>
-        <select id="yearSelect">
-            <option value="2023">2023</option>
-        </select>
-
-        <label for="monthSelect">Mes:</label>
-        <select id="monthSelect">
-            <option value="junio">Junio</option>
-            <option value="julio">Julio</option>
-            <option value="agosto">Agosto</option>
-            <option value="septiembre">Septiembre</option>
-            <option value="octubre" selected>Octubre</option>
-        </select>
-
-        <button onclick="filterData()">Filtrar</button>
+        <div>
+            <label for="yearSelect">Año:</label>
+            <select id="yearSelect">
+                <option value="2023">2023</option>
+            </select>
+        </div>
+        <div>
+            <label for="monthSelect">Mes: </label>
+            <select id="monthSelect">
+                <option value="junio">Junio</option>
+                <option value="julio">Julio</option>
+                <option value="agosto">Agosto</option>
+                <option value="septiembre">Septiembre</option>
+                <option value="octubre" selected>Octubre</option>
+                <option value="noviembre">Noviembre</option>
+            </select>
+        </div>
+        <div>
+            <button onclick="filterData()">Filtrar</button>
+        </div>
     </div>
-
     <div id="result-container"></div>
 
     <script src="https://code.jquery.com/jquery-3.3.1.slim.min.js"></script>
     <script src="https://cdnjs.cloudflare.com/ajax/libs/materialize/1.0.0/js/materialize.min.js"></script>
-
     <script>
         document.addEventListener('DOMContentLoaded', () => {
             fetch('navbar.html')
@@ -126,8 +118,9 @@
             fetch('data.json')
                 .then(response => response.json())
                 .then(data => {
-                    const jsonData = data;
-                    filterData(jsonData);
+                    // Almacena los datos completos para su posterior filtrado
+                    window.allData = data;
+                    filterData();
                 })
                 .catch(error => console.error('Error al cargar el archivo JSON:', error));
         });
@@ -147,22 +140,24 @@
                 "disponibilidad global 66"
             ];
 
-            const sortedData = customOrder.map(title => data.find(item => item.titulo === title)).filter(item => item);
+            const sortedData = customOrder.map(title => data.find(item => item.tipo === title)).filter(item => item);
 
             sortedData.forEach((item, index) => {
                 const card = document.createElement('div');
                 card.className = 'card';
-                const differenceColor = item.diferencia >= 0 ? 'green' : 'red';
+
+                const differenceColor = item.valor5 >= 0 ? 'green' : 'red';
                 const randomColor = getRandomColor();
-                const valueText = item.titulo === 'tiempos de respuesta apis' ? item["valor alcanzado"].toFixed(2) : `${item["valor alcanzado"].toFixed(2)}%`;
-                
+                const valueText = item.tipo === 'tiempos de respuesta apis' ? item.valor3.toFixed(2) : `${item.valor3.toFixed(2)}%`;
+
                 card.innerHTML = `
-                    <i class="fas ${getIconClass(item.titulo)}" style="font-size: 2em; color: ${randomColor};"></i>
-                    <div class="title">${item.titulo}</div>
+                    <i class="fas ${getIconClass(item.tipo)}" style="font-size: 2em; color: ${randomColor};"></i>
+                    <div class="title">${item.tipo}</div>
                     <div class="value">${valueText}</div>
-                    <div class="small">Valor Esperado: ${item["valor esperado"]}</div>
-                    <div class="small" style="color: ${differenceColor};">Diferencia: ${item.diferencia.toFixed(2)}</div>
+                    <div class="small">Valor Esperado: ${item.valor4}</div>
+                    <div class="small" style="color: ${differenceColor};">Diferencia: ${item.valor5.toFixed(2)}</div>
                 `;
+
                 resultContainer.appendChild(card);
 
                 if ((index + 1) % 2 === 0) {
@@ -174,9 +169,11 @@
         const getRandomColor = () => {
             const letters = '0123456789ABCDEF';
             let color = '#';
+
             for (let i = 0; i < 6; i++) {
                 color += letters[Math.floor(Math.random() * 16)];
             }
+
             return color;
         };
 
@@ -191,7 +188,8 @@
                 "disponibilidad mambu": "fa-database",
                 "disponibilidad global 66": "fa-globe",
             };
-            return titleIcons[title] || 'fa-question';
+
+            return titleIcons[title] || 'question fa';
         };
 
         window.filterData = () => {
@@ -200,18 +198,14 @@
             const selectedYear = parseInt(yearSelect.value);
             const selectedMonth = monthSelect.value.toLowerCase();
 
-            fetch('data.json')
-                .then(response => response.json())
-                .then(data => {
-                    const filteredData = data.filter(item => {
-                        const itemYear = item.año === selectedYear;
-                        const itemMonth = item.mes.toLowerCase() === selectedMonth;
-                        return itemYear && itemMonth;
-                    });
+            // Filtra los datos completos según los criterios seleccionados
+            const filteredData = window.allData.filter(item => {
+                const itemYear = item.año === selectedYear;
+                const itemMonth = item.mes.toLowerCase() === selectedMonth;
+                return itemYear && itemMonth;
+            });
 
-                    displayData(filteredData);
-                })
-                .catch(error => console.error('Error al cargar el archivo JSON:', error));
+            displayData(filteredData);
         };
     </script>
 </body>
